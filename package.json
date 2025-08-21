@@ -1,11 +1,27 @@
 {
-  "name": "root",
+  "name": "veramo-demo",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "render": "node -e \"require('spec-up')({ nowatch: true })\"",
-    "edit": "node -e \"require('spec-up')()\""
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "next": "15.5.0"
   },
   "devDependencies": {
-    "spec-up": "0.10.5"
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.0",
+    "@eslint/eslintrc": "^3"
   }
 }
