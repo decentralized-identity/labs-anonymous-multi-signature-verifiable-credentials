@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Veramo Semaphore Group DID Demo
 
-## Getting Started
+This demo implements the Setup Phase of the Anonymous Multi-Party Approval Protocol for Verifiable Credentials. It demonstrates creating a DID for a Semaphore group (not individual members) and publishing the group information in the DID Document.
 
-First, run the development server:
+## Features
 
+- **Group DID Creation**: Creates a DID specifically for a Semaphore group entity
+- **Semaphore Integration**: Manages anonymous group membership using Semaphore protocol
+- **DID Document Service Endpoints**: Publishes Semaphore group details in the DID Document
+- **Member Management**: Add members to the group while maintaining privacy
+
+## Setup
+
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Configure environment variables:
+Create a `.env.local` file with:
+```env
+NEXT_PUBLIC_INFURA_PROJECT_ID=your_infura_project_id_here
+KMS_SECRET_KEY=your-secret-key-at-least-32-chars-long1234567890
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the development server:
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open [http://localhost:3000](http://localhost:3000)
 
-## Learn More
+## Architecture
 
-To learn more about Next.js, take a look at the following resources:
+### Key Components
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Veramo Agent**: Manages DIDs and credentials
+- **Semaphore Group Manager**: Handles anonymous group operations
+- **Group DID Service**: Combines Veramo and Semaphore to create group-owned DIDs
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Group DID Structure
 
-## Deploy on Vercel
+The group's DID Document includes:
+- **Semaphore Group Service**: Contains group configuration, merkle root, and approval policy
+- **Merkle Root History Service** (optional): Endpoint for historical merkle roots
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Example service endpoint in DID Document:
+```json
+{
+  "id": "did:ethr:0x123...#semaphore",
+  "type": "SemaphoreGroup",
+  "serviceEndpoint": {
+    "type": "EthereumSmartContract",
+    "groupId": "group-123",
+    "merkleRoot": "0xabc...",
+    "approvalPolicy": {
+      "m": 2,
+      "n": 3
+    }
+  }
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Protocol Flow
+
+1. **Create Group**: Initialize a Semaphore group with approval policy (m of n)
+2. **Issue Group DID**: Create a DID owned by the group entity
+3. **Publish Group Info**: Add Semaphore details to DID Document service endpoints
+4. **Add Members**: Register member identity commitments to the group
+
+## Technologies
+
+- **Next.js 15**: React framework
+- **TypeScript**: Type safety
+- **Veramo**: DID and VC management
+- **Semaphore Protocol**: Zero-knowledge group membership
+- **Ethers.js**: Ethereum interactions
+- **TypeORM**: Database management
