@@ -2,6 +2,8 @@ import { Agent } from '../veramo/agent'
 import { SemaphoreGroupManager, SemaphoreGroupConfig } from '../semaphore/group-manager'
 import { Identity } from '@semaphore-protocol/identity'
 import { IIdentifier } from '@veramo/core'
+import * as fs from 'fs'
+import * as path from 'path'
 
 export interface GroupDIDConfig {
   groupName: string
@@ -15,13 +17,80 @@ export interface GroupDIDConfig {
   merkleRootHistoryEndpoint?: string
 }
 
+// File-based storage path
+const STORAGE_PATH = './group-data.json'
+
+// Global storage to persist across API calls
+const globalGroupManager = new SemaphoreGroupManager()
+const globalGroupDIDs = new Map<string, { identifier: IIdentifier, groupId: string }>()
+
+// Load data from file
+function loadDataFromFile() {
+  try {
+    if (fs.existsSync(STORAGE_PATH)) {
+      const data = JSON.parse(fs.readFileSync(STORAGE_PATH, 'utf8'))
+      
+      // Clear existing data before loading
+      globalGroupDIDs.clear()
+      
+      // Restore group DIDs
+      for (const [did, groupData] of Object.entries(data.groupDIDs || {})) {
+        globalGroupDIDs.set(did, groupData as { identifier: IIdentifier, groupId: string })
+      }
+      
+      // Restore group manager data
+      if (data.groupConfigs) {
+        for (const [groupId, config] of Object.entries(data.groupConfigs)) {
+          try {
+            // Check if group already exists
+            if (!globalGroupManager.getGroup(groupId)) {
+              globalGroupManager.createGroup(config as SemaphoreGroupConfig)
+              console.log('Restored group:', groupId)
+            }
+          } catch (error) {
+            console.error('Failed to restore group:', groupId, error)
+          }
+        }
+      }
+      
+      // Restore members if any
+      if (data.members) {
+        // TODO: Restore member identities if needed
+      }
+      
+      console.log('Loaded data from file:', globalGroupDIDs.size, 'groups')
+    }
+  } catch (error) {
+    console.error('Failed to load data from file:', error)
+  }
+}
+
+// Save data to file
+function saveDataToFile() {
+  try {
+    const data = {
+      groupDIDs: Object.fromEntries(globalGroupDIDs.entries()),
+      groupConfigs: Object.fromEntries(globalGroupManager.groupConfigs.entries())
+    }
+    fs.writeFileSync(STORAGE_PATH, JSON.stringify(data, null, 2))
+    console.log('Saved data to file')
+  } catch (error) {
+    console.error('Failed to save data to file:', error)
+  }
+}
+
+// Global service instance
+let globalServiceInstance: GroupDIDService | null = null
+
 export class GroupDIDService {
   private agent: Agent | null = null
   private groupManager: SemaphoreGroupManager
-  private groupDIDs: Map<string, IIdentifier> = new Map()
+  private groupDIDs: Map<string, { identifier: IIdentifier, groupId: string }>
 
   constructor() {
-    this.groupManager = new SemaphoreGroupManager()
+    // Use global instances to persist data across API calls
+    this.groupManager = globalGroupManager
+    this.groupDIDs = globalGroupDIDs
   }
 
   async initialize(agent: Agent) {
@@ -67,8 +136,13 @@ export class GroupDIDService {
       // Private key is stored encrypted in the database
     })))
 
-    // Store the association
-    this.groupDIDs.set(groupId, identifier)
+    // Store the association with both identifier and groupId
+    this.groupDIDs.set(identifier.did, { identifier, groupId })
+    console.log('Stored group DID:', identifier.did)
+    console.log('Total groups stored:', this.groupDIDs.size)
+    
+    // Save to file
+    saveDataToFile()
 
     // Update DID Document with Semaphore group information
     const didDocument = await this.buildGroupDIDDocument(
@@ -155,58 +229,74 @@ export class GroupDIDService {
   }
 
   async addMemberToGroup(groupDid: string, memberIdentity: Identity): Promise<void> {
-    const groupId = this.findGroupIdByDID(groupDid)
-    if (!groupId) {
+    console.log('Looking for group DID:', groupDid)
+    console.log('Available groups:', Array.from(this.groupDIDs.keys()))
+    
+    const groupData = this.groupDIDs.get(groupDid)
+    if (!groupData) {
       throw new Error(`Group not found for DID: ${groupDid}`)
     }
 
-    this.groupManager.addMember(groupId, memberIdentity)
+    this.groupManager.addMember(groupData.groupId, memberIdentity)
+    
+    // Save to file after adding member
+    saveDataToFile()
   }
 
   async removeMemberFromGroup(groupDid: string, identityCommitment: bigint): Promise<void> {
-    const groupId = this.findGroupIdByDID(groupDid)
-    if (!groupId) {
+    const groupData = this.groupDIDs.get(groupDid)
+    if (!groupData) {
       throw new Error(`Group not found for DID: ${groupDid}`)
     }
 
-    this.groupManager.removeMember(groupId, identityCommitment)
+    this.groupManager.removeMember(groupData.groupId, identityCommitment)
   }
 
   async getGroupInfo(groupDid: string) {
-    const groupId = this.findGroupIdByDID(groupDid)
-    if (!groupId) {
+    const groupData = this.groupDIDs.get(groupDid)
+    if (!groupData) {
       throw new Error(`Group not found for DID: ${groupDid}`)
     }
 
-    const groupData = this.groupManager.exportGroupData(groupId)
-    const identifier = this.groupDIDs.get(groupId)
+    const groupExportData = this.groupManager.exportGroupData(groupData.groupId)
     const didDocument = await this.buildGroupDIDDocument(
-      identifier!,
-      groupId,
+      groupData.identifier,
+      groupData.groupId,
       {
-        groupName: groupData.config.name,
-        groupDescription: groupData.config.description,
-        approvalPolicy: groupData.config.approvalPolicy,
+        groupName: groupExportData.config.name,
+        groupDescription: groupExportData.config.description,
+        approvalPolicy: groupExportData.config.approvalPolicy,
       }
     )
 
     return {
-      did: identifier,
-      semaphoreGroup: groupData,
+      did: groupData.identifier,
+      semaphoreGroup: groupExportData,
       didDocument,
     }
   }
 
-  private findGroupIdByDID(did: string): string | undefined {
-    for (const [groupId, identifier] of this.groupDIDs.entries()) {
-      if (identifier.did === did) {
-        return groupId
-      }
-    }
-    return undefined
-  }
-
   getGroupManager(): SemaphoreGroupManager {
     return this.groupManager
+  }
+
+  // Static method to get or create global instance
+  static async getInstance(agent?: Agent): Promise<GroupDIDService> {
+    // Always load data from file to ensure consistency
+    loadDataFromFile()
+    
+    console.log('getInstance called, current instance:', !!globalServiceInstance)
+    console.log('globalGroupDIDs size:', globalGroupDIDs.size)
+    console.log('globalGroupDIDs keys:', Array.from(globalGroupDIDs.keys()))
+    
+    if (!globalServiceInstance) {
+      globalServiceInstance = new GroupDIDService()
+      if (agent) {
+        await globalServiceInstance.initialize(agent)
+      }
+    } else if (agent && !globalServiceInstance.agent) {
+      await globalServiceInstance.initialize(agent)
+    }
+    return globalServiceInstance
   }
 }

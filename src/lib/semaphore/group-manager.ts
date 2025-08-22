@@ -15,7 +15,7 @@ export interface SemaphoreGroupConfig {
 
 export class SemaphoreGroupManager {
   private groups: Map<string, Group> = new Map()
-  private groupConfigs: Map<string, SemaphoreGroupConfig> = new Map()
+  public groupConfigs: Map<string, SemaphoreGroupConfig> = new Map()
   private memberIdentities: Map<string, Map<string, Identity>> = new Map()
 
   createGroup(config: SemaphoreGroupConfig): Group {

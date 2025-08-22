@@ -11,9 +11,8 @@ export async function POST(request: NextRequest) {
     // Initialize Veramo agent
     const agent = await initializeAgent()
     
-    // Initialize Group DID Service
-    const groupDIDService = new GroupDIDService()
-    await groupDIDService.initialize(agent)
+    // Get global Group DID Service instance
+    const groupDIDService = await GroupDIDService.getInstance(agent)
 
     // Create member identity
     const memberIdentity = new Identity(memberSecret)
