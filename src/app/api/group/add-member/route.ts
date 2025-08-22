@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { initializeAgent } from '@/lib/veramo/agent'
-import { GroupDIDService } from '@/lib/services/group-did-service'
+import { GroupDIDService } from '@/lib/services/group-did-service-mongo'
 import { Identity } from '@semaphore-protocol/identity'
 
 export async function POST(request: NextRequest) {
