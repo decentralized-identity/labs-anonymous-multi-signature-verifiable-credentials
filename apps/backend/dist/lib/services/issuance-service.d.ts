@@ -35,7 +35,10 @@ export declare class IssuanceService {
     private agent;
     private db;
     initialize(agent: Agent): Promise<void>;
-    createIssuanceProposal(vcClaims: VCClaims, groupDid: string): Promise<IssuanceProposal>;
+    createIssuanceProposal(vcClaims: VCClaims, groupDid: string, approvalPolicy: {
+        m: number;
+        n: number;
+    }): Promise<IssuanceProposal>;
     generateVoteProof(proposalId: string, memberIdentity: Identity, voteType: "approve" | "reject", group: Group): Promise<VoteProof>;
     submitVote(proposalId: string, voteProof: VoteProof, voteType: "approve" | "reject"): Promise<void>;
     private checkAndUpdateProposalStatus;

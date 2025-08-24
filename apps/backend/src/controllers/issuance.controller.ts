@@ -12,14 +12,15 @@ export class IssuanceController {
   async createProposal(@Body() body: {
     vcClaims: any;
     groupDid: string;
+    approvalPolicy: { m: number; n: number };
   }) {
     try {
-      const { vcClaims, groupDid } = body;
+      const { vcClaims, groupDid, approvalPolicy } = body;
 
       const agent = await initializeAgent();
       const issuanceService = await IssuanceService.getInstance(agent);
 
-      const proposal = await issuanceService.createIssuanceProposal(vcClaims, groupDid);
+      const proposal = await issuanceService.createIssuanceProposal(vcClaims, groupDid, approvalPolicy);
 
       return {
         success: true,

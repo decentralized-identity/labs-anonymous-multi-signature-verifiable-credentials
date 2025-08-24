@@ -9,14 +9,12 @@ export class GroupController {
   async createGroup(@Body() body: {
     groupName: string;
     groupDescription: string;
-    m: number;
-    n: number;
     contractAddress: string;
     chainId: number;
     merkleRootHistoryEndpoint: string;
   }) {
     try {
-      const { groupName, groupDescription, m, n, contractAddress, chainId, merkleRootHistoryEndpoint } = body;
+      const { groupName, groupDescription, contractAddress, chainId, merkleRootHistoryEndpoint } = body;
       console.log('body', body);
       
       const agent = await initializeAgent();
@@ -25,7 +23,6 @@ export class GroupController {
       const result = await groupDIDService.createGroupDID({
         groupName,
         groupDescription,
-        approvalPolicy: { m, n },
         semaphoreContractAddress: contractAddress,
         chainId: chainId.toString(),
         merkleRootHistoryEndpoint,

@@ -5,10 +5,6 @@ export interface SemaphoreGroupConfig {
     name: string;
     description: string;
     merkleTreeDepth: number;
-    approvalPolicy: {
-        m: number;
-        n: number;
-    };
 }
 export declare class SemaphoreGroupManager {
     private groups;

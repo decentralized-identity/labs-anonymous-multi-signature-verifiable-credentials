@@ -7,10 +7,6 @@ export interface SemaphoreGroupConfig {
   name: string
   description: string
   merkleTreeDepth: number
-  approvalPolicy: {
-    m: number // minimum required approvals
-    n: number // total number of members
-  }
 }
 
 export class SemaphoreGroupManager {

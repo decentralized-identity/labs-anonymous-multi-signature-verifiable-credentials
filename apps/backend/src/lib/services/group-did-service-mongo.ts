@@ -8,10 +8,6 @@ import { Db } from 'mongodb'
 export interface GroupDIDConfig {
   groupName: string
   groupDescription: string
-  approvalPolicy: {
-    m: number
-    n: number
-  }
   semaphoreContractAddress?: string
   chainId?: string
   merkleRootHistoryEndpoint?: string
@@ -53,7 +49,6 @@ export class GroupDIDService {
       name: config.groupName,
       description: config.groupDescription,
       merkleTreeDepth: 20,
-      approvalPolicy: config.approvalPolicy,
     }
     
     const group = this.groupManager.createGroup(semaphoreConfig)
@@ -120,10 +115,6 @@ export class GroupDIDService {
           contractAddress: config.semaphoreContractAddress,
           chainId: config.chainId || 'eip155:1',
           merkleRoot: groupData.merkleRoot,
-          approvalPolicy: {
-            m: config.approvalPolicy.m,
-            n: config.approvalPolicy.n,
-          },
         },
       })
     } else {
@@ -135,10 +126,6 @@ export class GroupDIDService {
           groupId: groupId,
           merkleRoot: groupData.merkleRoot,
           merkleTreeDepth: groupData.merkleTreeDepth,
-          approvalPolicy: {
-            m: config.approvalPolicy.m,
-            n: config.approvalPolicy.n,
-          },
         },
       })
     }
@@ -257,7 +244,6 @@ export class GroupDIDService {
       {
         groupName: groupExportData.config.name,
         groupDescription: groupExportData.config.description,
-        approvalPolicy: groupExportData.config.approvalPolicy,
       }
     )
 

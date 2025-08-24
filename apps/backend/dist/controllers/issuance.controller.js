@@ -23,10 +23,10 @@ const proof_1 = require("@semaphore-protocol/proof");
 let IssuanceController = class IssuanceController {
     async createProposal(body) {
         try {
-            const { vcClaims, groupDid } = body;
+            const { vcClaims, groupDid, approvalPolicy } = body;
             const agent = await (0, agent_1.initializeAgent)();
             const issuanceService = await issuance_service_1.IssuanceService.getInstance(agent);
-            const proposal = await issuanceService.createIssuanceProposal(vcClaims, groupDid);
+            const proposal = await issuanceService.createIssuanceProposal(vcClaims, groupDid, approvalPolicy);
             return {
                 success: true,
                 data: proposal,

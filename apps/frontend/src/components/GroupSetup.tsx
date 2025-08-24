@@ -15,10 +15,6 @@ interface GroupInfo {
       groupId: string;
       name: string;
       description: string;
-      approvalPolicy: {
-        m: number;
-        n: number;
-      };
     };
     merkleRoot: string;
     members: string[];
@@ -34,8 +30,6 @@ export default function GroupSetup({
 }) {
   const [groupName, setGroupName] = useState("");
   const [groupDescription, setGroupDescription] = useState("");
-  const [m, setM] = useState(2);
-  const [n, setN] = useState(3);
   const [contractAddress, setContractAddress] = useState("");
   const [chainId] = useState("eip155:11155111");
   const [merkleRootHistoryEndpoint, setMerkleRootHistoryEndpoint] =
@@ -58,8 +52,6 @@ export default function GroupSetup({
         body: JSON.stringify({
           groupName,
           groupDescription,
-          m,
-          n,
           contractAddress: contractAddress || undefined,
           chainId,
           merkleRootHistoryEndpoint: merkleRootHistoryEndpoint || undefined,
@@ -159,33 +151,6 @@ export default function GroupSetup({
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Min Approvals (m)
-                </label>
-                <input
-                  type="number"
-                  value={m}
-                  onChange={(e) => setM(parseInt(e.target.value))}
-                  className="w-full px-3 py-2 border rounded-md"
-                  min={1}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Total Members (n)
-                </label>
-                <input
-                  type="number"
-                  value={n}
-                  onChange={(e) => setN(parseInt(e.target.value))}
-                  className="w-full px-3 py-2 border rounded-md"
-                  min={m}
-                />
-              </div>
-            </div>
 
             <div>
               <label className="block text-sm font-medium mb-1">
@@ -251,10 +216,8 @@ export default function GroupSetup({
                   {groupInfo.semaphoreGroup.merkleRoot}
                 </code>
               </p>
-              <p>
-                <strong>Approval Policy:</strong>{" "}
-                {groupInfo.semaphoreGroup.config.approvalPolicy.m} of{" "}
-                {groupInfo.semaphoreGroup.config.approvalPolicy.n}
+              <p className="text-sm text-gray-600">
+                <em>Note: Approval policies are now set per VC issuance</em>
               </p>
             </div>
           </div>

@@ -15,7 +15,7 @@ class IssuanceService {
         const { db } = await (0, mongodb_1.connectToDatabase)();
         this.db = db;
     }
-    async createIssuanceProposal(vcClaims, groupDid) {
+    async createIssuanceProposal(vcClaims, groupDid, approvalPolicy) {
         if (!this.db) {
             throw new Error("Database not initialized");
         }
@@ -54,8 +54,8 @@ class IssuanceService {
             status: "pending",
             createdAt: new Date(),
             merkleRoot: groupConfig.merkleRoot || "0",
-            approvalThreshold: groupConfig.approvalPolicy.m,
-            totalMembers: groupConfig.approvalPolicy.n,
+            approvalThreshold: approvalPolicy.m,
+            totalMembers: approvalPolicy.n,
         };
         const proposalsCollection = this.db.collection("proposals");
         await proposalsCollection.insertOne(proposal);

@@ -19,8 +19,6 @@ function GroupSetup(param) {
     _s();
     const [groupName, setGroupName] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [groupDescription, setGroupDescription] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
-    const [m, setM] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(2);
-    const [n, setN] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(3);
     const [contractAddress, setContractAddress] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [chainId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("eip155:11155111");
     const [merkleRootHistoryEndpoint, setMerkleRootHistoryEndpoint] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
@@ -41,8 +39,6 @@ function GroupSetup(param) {
                 body: JSON.stringify({
                     groupName,
                     groupDescription,
-                    m,
-                    n,
                     contractAddress: contractAddress || undefined,
                     chainId,
                     merkleRootHistoryEndpoint: merkleRootHistoryEndpoint || undefined
@@ -108,7 +104,7 @@ function GroupSetup(param) {
                 children: "Semaphore Group Setup with Group DID"
             }, void 0, false, {
                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                lineNumber: 127,
+                lineNumber: 119,
                 columnNumber: 7
             }, this),
             !groupInfo ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -119,7 +115,7 @@ function GroupSetup(param) {
                         children: "Create Group"
                     }, void 0, false, {
                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                        lineNumber: 133,
+                        lineNumber: 125,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -132,7 +128,7 @@ function GroupSetup(param) {
                                         children: "Group Name"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 137,
+                                        lineNumber: 129,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -143,13 +139,13 @@ function GroupSetup(param) {
                                         placeholder: "DAO Governance Group"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 140,
+                                        lineNumber: 132,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                lineNumber: 136,
+                                lineNumber: 128,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -159,7 +155,7 @@ function GroupSetup(param) {
                                         children: "Group Description"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 150,
+                                        lineNumber: 142,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -170,76 +166,13 @@ function GroupSetup(param) {
                                         placeholder: "Multi-party approval group for verifiable credentials"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 153,
+                                        lineNumber: 145,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                lineNumber: 149,
-                                columnNumber: 13
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "grid grid-cols-2 gap-4",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                                className: "block text-sm font-medium mb-1",
-                                                children: "Min Approvals (m)"
-                                            }, void 0, false, {
-                                                fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                                lineNumber: 164,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                                type: "number",
-                                                value: m,
-                                                onChange: (e)=>setM(parseInt(e.target.value)),
-                                                className: "w-full px-3 py-2 border rounded-md",
-                                                min: 1
-                                            }, void 0, false, {
-                                                fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                                lineNumber: 167,
-                                                columnNumber: 17
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 163,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                                className: "block text-sm font-medium mb-1",
-                                                children: "Total Members (n)"
-                                            }, void 0, false, {
-                                                fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                                lineNumber: 177,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                                type: "number",
-                                                value: n,
-                                                onChange: (e)=>setN(parseInt(e.target.value)),
-                                                className: "w-full px-3 py-2 border rounded-md",
-                                                min: m
-                                            }, void 0, false, {
-                                                fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                                lineNumber: 180,
-                                                columnNumber: 17
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 176,
-                                        columnNumber: 15
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                lineNumber: 162,
+                                lineNumber: 141,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -249,7 +182,7 @@ function GroupSetup(param) {
                                         children: "Contract Address (Optional)"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 191,
+                                        lineNumber: 156,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -260,13 +193,13 @@ function GroupSetup(param) {
                                         placeholder: "0x..."
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 194,
+                                        lineNumber: 159,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                lineNumber: 190,
+                                lineNumber: 155,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -276,7 +209,7 @@ function GroupSetup(param) {
                                         children: "Merkle Root History Endpoint (Optional)"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 204,
+                                        lineNumber: 169,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -287,13 +220,13 @@ function GroupSetup(param) {
                                         placeholder: "https://api.example.com/merkle-roots"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 207,
+                                        lineNumber: 172,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                lineNumber: 203,
+                                lineNumber: 168,
                                 columnNumber: 13
                             }, this),
                             error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -301,7 +234,7 @@ function GroupSetup(param) {
                                 children: error
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                lineNumber: 217,
+                                lineNumber: 182,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -311,19 +244,19 @@ function GroupSetup(param) {
                                 children: loading ? "Creating..." : "Create Group DID"
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                lineNumber: 222,
+                                lineNumber: 187,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                        lineNumber: 135,
+                        lineNumber: 127,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                lineNumber: 132,
+                lineNumber: 124,
                 columnNumber: 9
             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "space-y-6",
@@ -336,7 +269,7 @@ function GroupSetup(param) {
                                 children: "Group Created Successfully!"
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                lineNumber: 234,
+                                lineNumber: 199,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -348,7 +281,7 @@ function GroupSetup(param) {
                                                 children: "Group DID:"
                                             }, void 0, false, {
                                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                                lineNumber: 239,
+                                                lineNumber: 204,
                                                 columnNumber: 17
                                             }, this),
                                             " ",
@@ -357,13 +290,13 @@ function GroupSetup(param) {
                                                 children: groupInfo.did.did
                                             }, void 0, false, {
                                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                                lineNumber: 240,
+                                                lineNumber: 205,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 238,
+                                        lineNumber: 203,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -372,7 +305,7 @@ function GroupSetup(param) {
                                                 children: "Group ID:"
                                             }, void 0, false, {
                                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                                lineNumber: 245,
+                                                lineNumber: 210,
                                                 columnNumber: 17
                                             }, this),
                                             " ",
@@ -380,7 +313,7 @@ function GroupSetup(param) {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 244,
+                                        lineNumber: 209,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -389,7 +322,7 @@ function GroupSetup(param) {
                                                 children: "Merkle Root:"
                                             }, void 0, false, {
                                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                                lineNumber: 249,
+                                                lineNumber: 214,
                                                 columnNumber: 17
                                             }, this),
                                             " ",
@@ -398,45 +331,39 @@ function GroupSetup(param) {
                                                 children: groupInfo.semaphoreGroup.merkleRoot
                                             }, void 0, false, {
                                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                                lineNumber: 250,
+                                                lineNumber: 215,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 248,
+                                        lineNumber: 213,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
-                                                children: "Approval Policy:"
-                                            }, void 0, false, {
-                                                fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                                lineNumber: 255,
-                                                columnNumber: 17
-                                            }, this),
-                                            " ",
-                                            groupInfo.semaphoreGroup.config.approvalPolicy.m,
-                                            " of",
-                                            " ",
-                                            groupInfo.semaphoreGroup.config.approvalPolicy.n
-                                        ]
-                                    }, void 0, true, {
+                                        className: "text-sm text-gray-600",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("em", {
+                                            children: "Note: Approval policies are now set per VC issuance"
+                                        }, void 0, false, {
+                                            fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
+                                            lineNumber: 220,
+                                            columnNumber: 17
+                                        }, this)
+                                    }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 254,
+                                        lineNumber: 219,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                lineNumber: 237,
+                                lineNumber: 202,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                        lineNumber: 233,
+                        lineNumber: 198,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -447,7 +374,7 @@ function GroupSetup(param) {
                                 children: "Add Members"
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                lineNumber: 263,
+                                lineNumber: 226,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -460,7 +387,7 @@ function GroupSetup(param) {
                                                 children: "Member Identity Secret"
                                             }, void 0, false, {
                                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                                lineNumber: 267,
+                                                lineNumber: 230,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -474,7 +401,7 @@ function GroupSetup(param) {
                                                         placeholder: "Enter or generate identity"
                                                     }, void 0, false, {
                                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                                        lineNumber: 271,
+                                                        lineNumber: 234,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -483,19 +410,19 @@ function GroupSetup(param) {
                                                         children: "Generate"
                                                     }, void 0, false, {
                                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                                        lineNumber: 278,
+                                                        lineNumber: 241,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                                lineNumber: 270,
+                                                lineNumber: 233,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 266,
+                                        lineNumber: 229,
                                         columnNumber: 15
                                     }, this),
                                     error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -503,7 +430,7 @@ function GroupSetup(param) {
                                         children: error
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 288,
+                                        lineNumber: 251,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -513,13 +440,13 @@ function GroupSetup(param) {
                                         children: loading ? "Adding..." : "Add Member"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 293,
+                                        lineNumber: 256,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                lineNumber: 265,
+                                lineNumber: 228,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -534,7 +461,7 @@ function GroupSetup(param) {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 303,
+                                        lineNumber: 266,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -544,24 +471,24 @@ function GroupSetup(param) {
                                                 children: member
                                             }, idx, false, {
                                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                                lineNumber: 308,
+                                                lineNumber: 271,
                                                 columnNumber: 19
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                        lineNumber: 306,
+                                        lineNumber: 269,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                lineNumber: 302,
+                                lineNumber: 265,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                        lineNumber: 262,
+                        lineNumber: 225,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -572,7 +499,7 @@ function GroupSetup(param) {
                                 children: "DID Document"
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                lineNumber: 320,
+                                lineNumber: 283,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("pre", {
@@ -580,29 +507,29 @@ function GroupSetup(param) {
                                 children: JSON.stringify(groupInfo.didDocument, null, 2)
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                                lineNumber: 321,
+                                lineNumber: 284,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                        lineNumber: 319,
+                        lineNumber: 282,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-                lineNumber: 232,
+                lineNumber: 197,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/apps/frontend/src/components/GroupSetup.tsx",
-        lineNumber: 126,
+        lineNumber: 118,
         columnNumber: 5
     }, this);
 }
-_s(GroupSetup, "V5ODxOI8xy1mi5B0mOLpruKL57g=");
+_s(GroupSetup, "kS1xgreF1NrCMXu5YlFYwg2XP34=");
 _c = GroupSetup;
 var _c;
 __turbopack_context__.k.register(_c, "GroupSetup");
@@ -639,6 +566,10 @@ function IssuancePhase(param) {
             role: ''
         }
     });
+    const [approvalPolicy, setApprovalPolicy] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
+        m: 2,
+        n: 3 // total members who can vote
+    });
     const [memberSecret, setMemberSecret] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
     const [issuedVC, setIssuedVC] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
@@ -655,7 +586,8 @@ function IssuancePhase(param) {
                 },
                 body: JSON.stringify({
                     vcClaims,
-                    groupDid
+                    groupDid,
+                    approvalPolicy
                 })
             });
             const result = await response.json();
@@ -780,7 +712,7 @@ function IssuancePhase(param) {
                 children: "Issuance Phase: Anonymous Multi-Party Approval"
             }, void 0, false, {
                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                lineNumber: 178,
+                lineNumber: 183,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -796,25 +728,25 @@ function IssuancePhase(param) {
                                     children: "1"
                                 }, void 0, false, {
                                     fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                    lineNumber: 184,
+                                    lineNumber: 189,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 183,
+                                lineNumber: 188,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 children: "VC Request"
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 186,
+                                lineNumber: 191,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                        lineNumber: 182,
+                        lineNumber: 187,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -827,25 +759,25 @@ function IssuancePhase(param) {
                                     children: "2"
                                 }, void 0, false, {
                                     fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                    lineNumber: 191,
+                                    lineNumber: 196,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 190,
+                                lineNumber: 195,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 children: "Anonymous Voting"
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 193,
+                                lineNumber: 198,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                        lineNumber: 189,
+                        lineNumber: 194,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -858,31 +790,31 @@ function IssuancePhase(param) {
                                     children: "3"
                                 }, void 0, false, {
                                     fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                    lineNumber: 198,
+                                    lineNumber: 203,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 197,
+                                lineNumber: 202,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 children: "VC Issuance"
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 200,
+                                lineNumber: 205,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                        lineNumber: 196,
+                        lineNumber: 201,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                lineNumber: 181,
+                lineNumber: 186,
                 columnNumber: 7
             }, this),
             error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -890,7 +822,7 @@ function IssuancePhase(param) {
                 children: error
             }, void 0, false, {
                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                lineNumber: 205,
+                lineNumber: 210,
                 columnNumber: 9
             }, this),
             step === 'request' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -901,7 +833,7 @@ function IssuancePhase(param) {
                         children: "Step 1: Create VC Issuance Request"
                     }, void 0, false, {
                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                        lineNumber: 211,
+                        lineNumber: 216,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -914,7 +846,7 @@ function IssuancePhase(param) {
                                         children: "Subject DID"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 215,
+                                        lineNumber: 220,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -928,13 +860,13 @@ function IssuancePhase(param) {
                                         placeholder: "did:example:holder123"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 216,
+                                        lineNumber: 221,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 214,
+                                lineNumber: 219,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -944,7 +876,7 @@ function IssuancePhase(param) {
                                         children: "Name"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 226,
+                                        lineNumber: 231,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -961,13 +893,13 @@ function IssuancePhase(param) {
                                         placeholder: "John Doe"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 227,
+                                        lineNumber: 232,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 225,
+                                lineNumber: 230,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -977,7 +909,7 @@ function IssuancePhase(param) {
                                         children: "Email"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 240,
+                                        lineNumber: 245,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -994,13 +926,13 @@ function IssuancePhase(param) {
                                         placeholder: "john@example.com"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 241,
+                                        lineNumber: 246,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 239,
+                                lineNumber: 244,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1010,7 +942,7 @@ function IssuancePhase(param) {
                                         children: "Role"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 254,
+                                        lineNumber: 259,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1027,13 +959,114 @@ function IssuancePhase(param) {
                                         placeholder: "Developer"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 255,
+                                        lineNumber: 260,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 253,
+                                lineNumber: 258,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "border-t pt-4",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
+                                        className: "text-sm font-medium mb-2",
+                                        children: "Approval Policy for this VC"
+                                    }, void 0, false, {
+                                        fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
+                                        lineNumber: 273,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "grid grid-cols-2 gap-4",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                        className: "block text-xs text-gray-600 mb-1",
+                                                        children: "Min Approvals (m)"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
+                                                        lineNumber: 276,
+                                                        columnNumber: 19
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: "number",
+                                                        value: approvalPolicy.m,
+                                                        onChange: (e)=>setApprovalPolicy((prev)=>({
+                                                                    ...prev,
+                                                                    m: parseInt(e.target.value) || 1
+                                                                })),
+                                                        className: "w-full px-3 py-2 border rounded-md",
+                                                        min: 1,
+                                                        max: approvalPolicy.n
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
+                                                        lineNumber: 277,
+                                                        columnNumber: 19
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
+                                                lineNumber: 275,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                                        className: "block text-xs text-gray-600 mb-1",
+                                                        children: "Total Voters (n)"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
+                                                        lineNumber: 287,
+                                                        columnNumber: 19
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                        type: "number",
+                                                        value: approvalPolicy.n,
+                                                        onChange: (e)=>setApprovalPolicy((prev)=>({
+                                                                    ...prev,
+                                                                    n: parseInt(e.target.value) || 1
+                                                                })),
+                                                        className: "w-full px-3 py-2 border rounded-md",
+                                                        min: approvalPolicy.m
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
+                                                        lineNumber: 288,
+                                                        columnNumber: 19
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
+                                                lineNumber: 286,
+                                                columnNumber: 17
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
+                                        lineNumber: 274,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-xs text-gray-500 mt-2",
+                                        children: [
+                                            "This VC requires ",
+                                            approvalPolicy.m,
+                                            " out of ",
+                                            approvalPolicy.n,
+                                            " approvals"
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
+                                        lineNumber: 297,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
+                                lineNumber: 272,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1043,19 +1076,19 @@ function IssuancePhase(param) {
                                 children: loading ? 'Creating Proposal...' : 'Create Issuance Proposal'
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 267,
+                                lineNumber: 302,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                        lineNumber: 213,
+                        lineNumber: 218,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                lineNumber: 210,
+                lineNumber: 215,
                 columnNumber: 9
             }, this),
             step === 'voting' && proposal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1066,7 +1099,7 @@ function IssuancePhase(param) {
                         children: "Step 2: Anonymous Multi-Party Voting"
                     }, void 0, false, {
                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                        lineNumber: 281,
+                        lineNumber: 316,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1077,7 +1110,7 @@ function IssuancePhase(param) {
                                 children: "Proposal Details"
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 284,
+                                lineNumber: 319,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1086,7 +1119,7 @@ function IssuancePhase(param) {
                                         children: "Proposal ID:"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 285,
+                                        lineNumber: 320,
                                         columnNumber: 16
                                     }, this),
                                     " ",
@@ -1095,13 +1128,13 @@ function IssuancePhase(param) {
                                         children: proposal.proposalId
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 285,
+                                        lineNumber: 320,
                                         columnNumber: 46
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 285,
+                                lineNumber: 320,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1110,7 +1143,7 @@ function IssuancePhase(param) {
                                         children: "Subject:"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 286,
+                                        lineNumber: 321,
                                         columnNumber: 16
                                     }, this),
                                     " ",
@@ -1118,7 +1151,7 @@ function IssuancePhase(param) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 286,
+                                lineNumber: 321,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1127,7 +1160,7 @@ function IssuancePhase(param) {
                                         children: "Email:"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 287,
+                                        lineNumber: 322,
                                         columnNumber: 16
                                     }, this),
                                     " ",
@@ -1135,7 +1168,7 @@ function IssuancePhase(param) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 287,
+                                lineNumber: 322,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1144,7 +1177,7 @@ function IssuancePhase(param) {
                                         children: "Role:"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 288,
+                                        lineNumber: 323,
                                         columnNumber: 16
                                     }, this),
                                     " ",
@@ -1152,7 +1185,7 @@ function IssuancePhase(param) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 288,
+                                lineNumber: 323,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1161,7 +1194,7 @@ function IssuancePhase(param) {
                                         children: "Threshold:"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 289,
+                                        lineNumber: 324,
                                         columnNumber: 16
                                     }, this),
                                     " ",
@@ -1171,13 +1204,13 @@ function IssuancePhase(param) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 289,
+                                lineNumber: 324,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                        lineNumber: 283,
+                        lineNumber: 318,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1191,7 +1224,7 @@ function IssuancePhase(param) {
                                         children: proposal.approvals.length
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 294,
+                                        lineNumber: 329,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1199,13 +1232,13 @@ function IssuancePhase(param) {
                                         children: "Approvals"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 295,
+                                        lineNumber: 330,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 293,
+                                lineNumber: 328,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1216,7 +1249,7 @@ function IssuancePhase(param) {
                                         children: proposal.rejections.length
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 299,
+                                        lineNumber: 334,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1224,19 +1257,19 @@ function IssuancePhase(param) {
                                         children: "Rejections"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 300,
+                                        lineNumber: 335,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 298,
+                                lineNumber: 333,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                        lineNumber: 292,
+                        lineNumber: 327,
                         columnNumber: 11
                     }, this),
                     proposal.status === 'pending' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1249,7 +1282,7 @@ function IssuancePhase(param) {
                                         children: "Member Identity (to vote)"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 307,
+                                        lineNumber: 342,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1263,7 +1296,7 @@ function IssuancePhase(param) {
                                                 placeholder: "Member identity secret"
                                             }, void 0, false, {
                                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                                lineNumber: 309,
+                                                lineNumber: 344,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1272,19 +1305,19 @@ function IssuancePhase(param) {
                                                 children: "Generate"
                                             }, void 0, false, {
                                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                                lineNumber: 316,
+                                                lineNumber: 351,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 308,
+                                        lineNumber: 343,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 306,
+                                lineNumber: 341,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1297,7 +1330,7 @@ function IssuancePhase(param) {
                                         children: loading ? 'Voting...' : 'Approve'
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 326,
+                                        lineNumber: 361,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1307,19 +1340,19 @@ function IssuancePhase(param) {
                                         children: loading ? 'Voting...' : 'Reject'
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 334,
+                                        lineNumber: 369,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 325,
+                                lineNumber: 360,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                        lineNumber: 305,
+                        lineNumber: 340,
                         columnNumber: 13
                     }, this),
                     proposal.status === 'approved' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1330,7 +1363,7 @@ function IssuancePhase(param) {
                                 children: "✅ Proposal Approved!"
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 347,
+                                lineNumber: 382,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1341,13 +1374,13 @@ function IssuancePhase(param) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 348,
+                                lineNumber: 383,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                        lineNumber: 346,
+                        lineNumber: 381,
                         columnNumber: 13
                     }, this),
                     proposal.status === 'rejected' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1358,26 +1391,26 @@ function IssuancePhase(param) {
                                 children: "❌ Proposal Rejected"
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 354,
+                                lineNumber: 389,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                 children: "The proposal has been rejected by the group."
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 355,
+                                lineNumber: 390,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                        lineNumber: 353,
+                        lineNumber: 388,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                lineNumber: 280,
+                lineNumber: 315,
                 columnNumber: 9
             }, this),
             step === 'issue' && proposal && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1388,7 +1421,7 @@ function IssuancePhase(param) {
                         children: "Step 3: Issue Verifiable Credential with Evidence"
                     }, void 0, false, {
                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                        lineNumber: 364,
+                        lineNumber: 399,
                         columnNumber: 11
                     }, this),
                     !issuedVC ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1398,7 +1431,7 @@ function IssuancePhase(param) {
                                 children: "The proposal has been approved! Click below to issue the VC with cryptographic evidence of the anonymous multi-party approval."
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 368,
+                                lineNumber: 403,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1408,13 +1441,13 @@ function IssuancePhase(param) {
                                 children: loading ? 'Issuing VC...' : 'Issue Verifiable Credential'
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 370,
+                                lineNumber: 405,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                        lineNumber: 367,
+                        lineNumber: 402,
                         columnNumber: 13
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: [
@@ -1426,20 +1459,20 @@ function IssuancePhase(param) {
                                         children: "✅ VC Issued Successfully!"
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 381,
+                                        lineNumber: 416,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         children: "The VC includes cryptographic evidence of the anonymous multi-party approval."
                                     }, void 0, false, {
                                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                        lineNumber: 382,
+                                        lineNumber: 417,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 380,
+                                lineNumber: 415,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1447,7 +1480,7 @@ function IssuancePhase(param) {
                                 children: "Issued Verifiable Credential:"
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 385,
+                                lineNumber: 420,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$15$2e$5$2e$0_react$2d$dom$40$19$2e$1$2e$0_react$40$19$2e$1$2e$0_$5f$react$40$19$2e$1$2e$0$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("pre", {
@@ -1455,29 +1488,29 @@ function IssuancePhase(param) {
                                 children: JSON.stringify(issuedVC, null, 2)
                             }, void 0, false, {
                                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                                lineNumber: 386,
+                                lineNumber: 421,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                        lineNumber: 379,
+                        lineNumber: 414,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-                lineNumber: 363,
+                lineNumber: 398,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/apps/frontend/src/components/IssuancePhase.tsx",
-        lineNumber: 177,
+        lineNumber: 182,
         columnNumber: 5
     }, this);
 }
-_s(IssuancePhase, "q0MnUm3vH9i+cVwqaihMW1tbbiM=");
+_s(IssuancePhase, "5h//fxtKLVSLI75t4+2Sx6BaA8I=");
 _c = IssuancePhase;
 var _c;
 __turbopack_context__.k.register(_c, "IssuancePhase");

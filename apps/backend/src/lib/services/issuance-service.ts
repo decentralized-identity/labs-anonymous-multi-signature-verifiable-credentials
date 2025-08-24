@@ -54,7 +54,8 @@ export class IssuanceService {
   // Step 1: Create issuance proposal
   async createIssuanceProposal(
     vcClaims: VCClaims,
-    groupDid: string
+    groupDid: string,
+    approvalPolicy: { m: number; n: number }
   ): Promise<IssuanceProposal> {
     if (!this.db) {
       throw new Error("Database not initialized");
@@ -105,8 +106,8 @@ export class IssuanceService {
       status: "pending",
       createdAt: new Date(),
       merkleRoot: groupConfig.merkleRoot || "0",
-      approvalThreshold: groupConfig.approvalPolicy.m,
-      totalMembers: groupConfig.approvalPolicy.n,
+      approvalThreshold: approvalPolicy.m,  // Use proposal-specific policy
+      totalMembers: approvalPolicy.n,       // Use proposal-specific policy
     };
 
     // Store proposal in MongoDB

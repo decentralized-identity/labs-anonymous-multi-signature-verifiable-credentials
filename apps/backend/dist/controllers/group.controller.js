@@ -20,14 +20,13 @@ const identity_1 = require("@semaphore-protocol/identity");
 let GroupController = class GroupController {
     async createGroup(body) {
         try {
-            const { groupName, groupDescription, m, n, contractAddress, chainId, merkleRootHistoryEndpoint } = body;
+            const { groupName, groupDescription, contractAddress, chainId, merkleRootHistoryEndpoint } = body;
             console.log('body', body);
             const agent = await (0, agent_1.initializeAgent)();
             const groupDIDService = await group_did_service_mongo_1.GroupDIDService.getInstance(agent);
             const result = await groupDIDService.createGroupDID({
                 groupName,
                 groupDescription,
-                approvalPolicy: { m, n },
                 semaphoreContractAddress: contractAddress,
                 chainId: chainId.toString(),
                 merkleRootHistoryEndpoint,

@@ -40,6 +40,11 @@ export default function IssuancePhase({ groupDid }: { groupDid: string }) {
     }
   })
   
+  const [approvalPolicy, setApprovalPolicy] = useState({
+    m: 2, // minimum approvals needed
+    n: 3  // total members who can vote
+  })
+  
   const [memberSecret, setMemberSecret] = useState('')
   const [issuedVC, setIssuedVC] = useState<unknown>(null)
   const [loading, setLoading] = useState(false)
@@ -54,7 +59,7 @@ export default function IssuancePhase({ groupDid }: { groupDid: string }) {
       const response = await fetch('http://localhost:3001/issuance/create-proposal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ vcClaims, groupDid }),
+        body: JSON.stringify({ vcClaims, groupDid, approvalPolicy }),
       })
 
       const result = await response.json()
@@ -262,6 +267,36 @@ export default function IssuancePhase({ groupDid }: { groupDid: string }) {
                 className="w-full px-3 py-2 border rounded-md"
                 placeholder="Developer"
               />
+            </div>
+
+            <div className="border-t pt-4">
+              <h4 className="text-sm font-medium mb-2">Approval Policy for this VC</h4>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs text-gray-600 mb-1">Min Approvals (m)</label>
+                  <input
+                    type="number"
+                    value={approvalPolicy.m}
+                    onChange={(e) => setApprovalPolicy(prev => ({ ...prev, m: parseInt(e.target.value) || 1 }))}
+                    className="w-full px-3 py-2 border rounded-md"
+                    min={1}
+                    max={approvalPolicy.n}
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-600 mb-1">Total Voters (n)</label>
+                  <input
+                    type="number"
+                    value={approvalPolicy.n}
+                    onChange={(e) => setApprovalPolicy(prev => ({ ...prev, n: parseInt(e.target.value) || 1 }))}
+                    className="w-full px-3 py-2 border rounded-md"
+                    min={approvalPolicy.m}
+                  />
+                </div>
+              </div>
+              <p className="text-xs text-gray-500 mt-2">
+                This VC requires {approvalPolicy.m} out of {approvalPolicy.n} approvals
+              </p>
             </div>
 
             <button

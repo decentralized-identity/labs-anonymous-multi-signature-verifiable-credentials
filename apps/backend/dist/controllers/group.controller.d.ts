@@ -2,8 +2,6 @@ export declare class GroupController {
     createGroup(body: {
         groupName: string;
         groupDescription: string;
-        m: number;
-        n: number;
         contractAddress: string;
         chainId: number;
         merkleRootHistoryEndpoint: string;

@@ -2,6 +2,10 @@ export declare class IssuanceController {
     createProposal(body: {
         vcClaims: any;
         groupDid: string;
+        approvalPolicy: {
+            m: number;
+            n: number;
+        };
     }): Promise<{
         success: boolean;
         data: import("@/lib/services/issuance-service").IssuanceProposal;

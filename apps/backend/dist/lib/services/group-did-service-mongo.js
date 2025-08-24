@@ -26,7 +26,6 @@ class GroupDIDService {
             name: config.groupName,
             description: config.groupDescription,
             merkleTreeDepth: 20,
-            approvalPolicy: config.approvalPolicy,
         };
         const group = this.groupManager.createGroup(semaphoreConfig);
         console.log('process.env.INFURA_PROJECT_ID', process.env.INFURA_PROJECT_ID);
@@ -72,10 +71,6 @@ class GroupDIDService {
                     contractAddress: config.semaphoreContractAddress,
                     chainId: config.chainId || 'eip155:1',
                     merkleRoot: groupData.merkleRoot,
-                    approvalPolicy: {
-                        m: config.approvalPolicy.m,
-                        n: config.approvalPolicy.n,
-                    },
                 },
             });
         }
@@ -88,10 +83,6 @@ class GroupDIDService {
                     groupId: groupId,
                     merkleRoot: groupData.merkleRoot,
                     merkleTreeDepth: groupData.merkleTreeDepth,
-                    approvalPolicy: {
-                        m: config.approvalPolicy.m,
-                        n: config.approvalPolicy.n,
-                    },
                 },
             });
         }
@@ -176,7 +167,6 @@ class GroupDIDService {
         const didDocument = await this.buildGroupDIDDocument(groupData.identifier, groupData.groupId, {
             groupName: groupExportData.config.name,
             groupDescription: groupExportData.config.description,
-            approvalPolicy: groupExportData.config.approvalPolicy,
         });
         return {
             did: groupData.identifier,

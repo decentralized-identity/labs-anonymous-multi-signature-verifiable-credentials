@@ -5,10 +5,6 @@ import { IIdentifier } from '@veramo/core';
 export interface GroupDIDConfig {
     groupName: string;
     groupDescription: string;
-    approvalPolicy: {
-        m: number;
-        n: number;
-    };
     semaphoreContractAddress?: string;
     chainId?: string;
     merkleRootHistoryEndpoint?: string;
