@@ -19,7 +19,6 @@
 /out/
 **/out/
 **/trace
-**/*.nft.json
 
 # production
 /build
@@ -43,3 +42,39 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# build outputs
+/dist
+**/dist/
+**/build/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs
+*.log
+lerna-debug.log*
+
+# Cache directories
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+
+# Temporary files
+.tmp/
+.temp/

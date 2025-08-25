@@ -1,19 +1,31 @@
 {
-  "name": "multisig-anon-vc-demo",
+  "name": "anon-multiparty-vc",
   "version": "0.1.0",
   "private": true,
+  "description": "Anonymous Multi-Party Approval Protocol for Verifiable Credentials",
   "scripts": {
-    "dev": "pnpm --filter frontend dev",
-    "dev:backend": "pnpm --filter backend dev",
-    "dev:all": "pnpm --parallel --filter \"frontend\" --filter \"backend\" dev",
+    "dev:example": "cd examples/multisig-anon-vc-demo && pnpm dev:all",
     "build": "pnpm --recursive build",
-    "start": "pnpm --filter frontend start",
-    "lint": "pnpm --recursive lint"
+    "lint": "pnpm --recursive lint",
+    "test": "pnpm --recursive test"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
     "@types/node": "^20",
-    "eslint": "^9",
     "typescript": "^5"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/anon-multiparty-vc"
+  },
+  "keywords": [
+    "verifiable-credentials",
+    "semaphore",
+    "zero-knowledge",
+    "multi-party",
+    "anonymous-voting",
+    "did",
+    "veramo"
+  ],
+  "author": "",
+  "license": "MIT"
 }
