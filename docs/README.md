@@ -144,6 +144,50 @@ A Verifier performs a two-stage process to validate the VC.
     - It confirms that the `groupMerkleRoot` listed in the `evidence` is a valid, historical, or current root for that Semaphore group. This can be checked against a list of valid roots maintained by the Issuer.
     - **Result:** This cryptographically proves that the issuance was authorized by a sufficient number of unique, anonymous members of the Issuer's official group.
 
+## 5. Merkle Root History Management
+
+To efficiently manage and verify historical merkle roots while keeping DID documents lightweight, the protocol uses a hybrid storage approach:
+
+### 5.1. Hybrid Storage Architecture
+
+The DID Document contains only recent merkle roots (e.g., last 10), while complete history is stored in external storage:
+
+```json
+{
+  "id": "did:example:123#merkle-roots-history",
+  "type": "MerkleRootHistory",
+  "recentRoots": [
+    {
+      "root": "0x1234...",
+      "timestamp": "2024-01-20T10:00:00Z",
+      "blockNumber": 1234567
+    }
+    // ... recent 10 roots only
+  ],
+  "archiveInfo": {
+    "type": "MongoDB",
+    "endpoint": "https://api.example.com/api/groups/{groupId}/merkle-roots",
+    "totalRoots": 5432
+  }
+}
+```
+
+### 5.2. Verification Flow
+
+When verifying a merkle root:
+
+1. **Check DID Document** - Fast path for recent roots (~10ms)
+2. **Query External Storage** - For older roots via archive endpoint (~50ms)
+3. **Reject if Not Found** - Root not in history means invalid proof
+
+### 5.3. Storage Options
+
+- **Centralized Database** (e.g., MongoDB, PostgreSQL): Fast indexed queries, suitable for real-time verification
+- **IPFS**: Decentralized archive, suitable for long-term audit trails
+- **On-chain Index**: Optional smart contract for critical checkpoints
+
+This approach ensures DID documents remain small while maintaining full verifiability of all historical proofs.
+
 ---
 
 ## References
