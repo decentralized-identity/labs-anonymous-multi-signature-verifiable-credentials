@@ -1,37 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  Box,
-  Typography,
-  TextField,
-  Button,
-  Paper,
-  Alert,
-  CircularProgress,
-  Chip,
-  Grid,
-  Card,
-  CardContent,
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Collapse,
-  IconButton
-} from '@mui/material';
-import {
-  CheckCircle as CheckCircleIcon,
-  Cancel as CancelIcon,
-  ExpandMore as ExpandMoreIcon,
-  ExpandLess as ExpandLessIcon,
-  Security as SecurityIcon,
-  VerifiedUser as VerifiedUserIcon,
-  Fingerprint as FingerprintIcon,
-  Groups as GroupsIcon,
-  AccountTree as AccountTreeIcon
-} from '@mui/icons-material';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { TextArea } from '@/components/ui/Input';
+import { Alert } from '@/components/ui/Alert';
+import { Badge } from '@/components/ui/Badge';
 
 interface VerificationResult {
   valid: boolean;
@@ -66,7 +40,6 @@ export default function VerificationPhase() {
   const [inspectResult, setInspectResult] = useState<InspectResult | null>(null);
   const [error, setError] = useState('');
   const [showDetails, setShowDetails] = useState(false);
-  const [showInspect, setShowInspect] = useState(false);
 
   const handleVerify = async () => {
     if (!credential.trim()) {
@@ -98,24 +71,20 @@ export default function VerificationPhase() {
 
       // Auto-inspect for details
       await handleInspect(true);
-    } catch (err) {
-      console.error('Verification error:', err);
-      setError(err instanceof Error ? err.message : 'Failed to verify credential');
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Failed to verify credential');
     } finally {
       setLoading(false);
     }
   };
 
   const handleInspect = async (silent = false) => {
-    if (!credential.trim() && !silent) {
-      setError('Please enter a credential to inspect');
+    if (!credential.trim()) {
+      if (!silent) setError('Please enter a credential to inspect');
       return;
     }
 
-    if (!silent) {
-      setLoading(true);
-      setError('');
-    }
+    if (!silent) setLoading(true);
 
     try {
       const response = await fetch('http://localhost:3001/api/verification/inspect', {
@@ -129,260 +98,303 @@ export default function VerificationPhase() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Inspection failed');
+        if (!silent) {
+          throw new Error(data.error || 'Inspection failed');
+        }
+        return;
       }
 
       setInspectResult(data.credential);
-      if (!silent) setShowInspect(true);
-    } catch (err) {
+    } catch (error) {
       if (!silent) {
-        console.error('Inspection error:', err);
-        setError(err instanceof Error ? err.message : 'Failed to inspect credential');
+        setError(error instanceof Error ? error.message : 'Failed to inspect credential');
       }
     } finally {
       if (!silent) setLoading(false);
     }
   };
 
-  const getCheckIcon = (passed: boolean) => {
-    return passed ? (
-      <CheckCircleIcon color="success" />
-    ) : (
-      <CancelIcon color="error" />
+  const getCheckIcon = (isValid: boolean) => {
+    if (isValid) {
+      return (
+        <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      );
+    }
+    return (
+      <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
     );
   };
 
-  const getCheckLabel = (key: string): string => {
-    const labels: Record<string, string> = {
-      signatureValid: 'Digital Signature Verification',
-      evidenceValid: 'Evidence Structure Validation',
-      thresholdMet: 'Approval Threshold Requirement',
-      nullifiersUnique: 'Nullifier Uniqueness Check',
-      merkleRootValid: 'Merkle Root Validation'
-    };
-    return labels[key] || key;
+  const checkLabels = {
+    signatureValid: 'Digital Signature',
+    evidenceValid: 'Evidence Structure',
+    thresholdMet: 'Approval Threshold',
+    nullifiersUnique: 'Unique Nullifiers',
+    merkleRootValid: 'Merkle Root Verification'
   };
 
-  const getCheckDescription = (key: string): string => {
-    const descriptions: Record<string, string> = {
-      signatureValid: 'Verifies the VC was signed by the claimed issuer',
-      evidenceValid: 'Validates the anonymous approval evidence format',
-      thresholdMet: 'Confirms sufficient members approved the issuance',
-      nullifiersUnique: 'Ensures no duplicate votes were counted',
-      merkleRootValid: 'Verifies the merkle root exists in issuer history'
-    };
-    return descriptions[key] || '';
+  const checkDescriptions = {
+    signatureValid: 'Verifies the issuer\'s digital signature',
+    evidenceValid: 'Validates the anonymous approval evidence format',
+    thresholdMet: 'Confirms minimum approvals were received',
+    nullifiersUnique: 'Ensures no duplicate votes were cast',
+    merkleRootValid: 'Verifies merkle root exists in issuer\'s history'
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <Grid container spacing={3}>
-        {/* Input Section */}
-        <Grid item xs={12} lg={6}>
-          <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              Enter Credential
-            </Typography>
-            <TextField
-              fullWidth
-              multiline
-              rows={8}
-              variant="outlined"
-              placeholder="Paste your JWT credential here..."
+    <div className="space-y-6">
+      {/* Input Section */}
+      <Card variant="elevated">
+        <CardHeader>
+          <CardTitle>Verify Credential</CardTitle>
+          <CardDescription>
+            Paste a JWT credential to verify its authenticity and anonymous approvals
+          </CardDescription>
+        </CardHeader>
+
+        <CardContent>
+          <div className="space-y-4">
+            <TextArea
               value={credential}
               onChange={(e) => setCredential(e.target.value)}
-              sx={{ mb: 2 }}
+              placeholder="Paste your JWT verifiable credential here..."
+              rows={6}
+              className="font-mono text-sm"
             />
-            <Box sx={{ display: 'flex', gap: 2 }}>
+
+            {error && (
+              <Alert variant="error">
+                {error}
+              </Alert>
+            )}
+
+            <div className="flex gap-3">
               <Button
-                variant="contained"
                 onClick={handleVerify}
-                disabled={loading || !credential.trim()}
-                startIcon={loading ? <CircularProgress size={20} /> : <SecurityIcon />}
+                loading={loading}
+                disabled={!credential.trim()}
+                className="flex-1"
+                size="lg"
               >
-                {loading ? 'Verifying...' : 'Verify Credential'}
+                Verify Credential
               </Button>
               <Button
-                variant="outlined"
-                onClick={() => handleInspect(false)}
-                disabled={loading || !credential.trim()}
-                startIcon={<FingerprintIcon />}
+                onClick={() => handleInspect()}
+                variant="outline"
+                disabled={!credential.trim() || loading}
               >
                 Inspect Only
               </Button>
-            </Box>
-          </Paper>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-          {/* Credential Details */}
-          {inspectResult && (
-            <Paper sx={{ p: 3, mt: 3 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Typography variant="h6">Credential Details</Typography>
-                <IconButton onClick={() => setShowInspect(!showInspect)}>
-                  {showInspect ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                </IconButton>
-              </Box>
+      {/* Verification Results */}
+      {verificationResult && (
+        <Card variant={verificationResult.valid ? 'default' : 'bordered'}>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                {verificationResult.valid ? (
+                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                    <svg className="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  </div>
+                ) : (
+                  <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                    <svg className="w-7 h-7 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                  </div>
+                )}
+                <div>
+                  <CardTitle className={verificationResult.valid ? 'text-green-900' : 'text-red-900'}>
+                    {verificationResult.valid ? 'Valid Credential' : 'Invalid Credential'}
+                  </CardTitle>
+                  <CardDescription>
+                    {verificationResult.valid
+                      ? 'All verification checks passed successfully'
+                      : 'One or more verification checks failed'}
+                  </CardDescription>
+                </div>
+              </div>
+              <Badge variant={verificationResult.valid ? 'success' : 'error'}>
+                {verificationResult.valid ? 'VERIFIED' : 'FAILED'}
+              </Badge>
+            </div>
+          </CardHeader>
 
-              <Collapse in={showInspect}>
-                <Box sx={{ mt: 2 }}>
-                  <Typography variant="subtitle2" color="text.secondary">Issuer</Typography>
-                  <Typography variant="body2" sx={{ mb: 2, wordBreak: 'break-all' }}>
-                    {inspectResult.issuer || 'Unknown'}
-                  </Typography>
-
-                  <Typography variant="subtitle2" color="text.secondary">Issuance Date</Typography>
-                  <Typography variant="body2" sx={{ mb: 2 }}>
-                    {inspectResult.issuanceDate ?
-                      new Date(inspectResult.issuanceDate).toLocaleString() :
-                      'Unknown'}
-                  </Typography>
-
-                  <Typography variant="subtitle2" color="text.secondary">Subject</Typography>
-                  <Paper variant="outlined" sx={{ p: 1, mb: 2, bgcolor: 'grey.50' }}>
-                    <pre style={{ margin: 0, fontSize: '0.85rem', overflow: 'auto' }}>
-                      {JSON.stringify(inspectResult.subject, null, 2)}
-                    </pre>
-                  </Paper>
-
-                  {inspectResult.evidence && (
-                    <>
-                      <Typography variant="subtitle2" color="text.secondary">Evidence</Typography>
-                      <Paper variant="outlined" sx={{ p: 1, bgcolor: 'grey.50' }}>
-                        <pre style={{ margin: 0, fontSize: '0.85rem', overflow: 'auto' }}>
-                          {JSON.stringify(inspectResult.evidence, null, 2)}
-                        </pre>
-                      </Paper>
-                    </>
-                  )}
-                </Box>
-              </Collapse>
-            </Paper>
-          )}
-        </Grid>
-
-        {/* Results Section */}
-        <Grid item xs={12} lg={6}>
-          {error && (
-            <Alert severity="error" sx={{ mb: 3 }}>
-              {error}
-            </Alert>
-          )}
-
-          {verificationResult && (
-            <>
-              {/* Overall Result */}
-              <Card
-                sx={{
-                  mb: 3,
-                  borderLeft: 6,
-                  borderLeftColor: verificationResult.valid ? 'success.main' : 'error.main'
-                }}
-              >
-                <CardContent>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    {getCheckIcon(verificationResult.valid)}
-                    <Box>
-                      <Typography variant="h5">
-                        {verificationResult.valid ? 'Valid Credential' : 'Invalid Credential'}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {verificationResult.valid ?
-                          'All verification checks passed successfully' :
-                          'One or more verification checks failed'}
-                      </Typography>
-                    </Box>
-                  </Box>
-                </CardContent>
-              </Card>
-
+          <CardContent>
+            <div className="space-y-4">
               {/* Verification Checks */}
-              <Paper sx={{ p: 3, mb: 3 }}>
-                <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <SecurityIcon />
-                  Verification Checks
-                </Typography>
-                <Divider sx={{ my: 2 }} />
-
-                <List>
+              <div>
+                <h3 className="text-sm font-semibold text-gray-900 mb-3">Verification Checks</h3>
+                <div className="grid md:grid-cols-2 gap-3">
                   {Object.entries(verificationResult.checks).map(([key, value]) => (
-                    <ListItem key={key} sx={{ px: 0 }}>
-                      <ListItemIcon>
-                        {getCheckIcon(value)}
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={getCheckLabel(key)}
-                        secondary={getCheckDescription(key)}
-                      />
-                    </ListItem>
+                    <div
+                      key={key}
+                      className={`flex items-start space-x-3 p-3 rounded-lg border ${
+                        value ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'
+                      }`}
+                    >
+                      {getCheckIcon(value)}
+                      <div className="flex-1">
+                        <div className="font-medium text-sm">
+                          {checkLabels[key as keyof typeof checkLabels]}
+                        </div>
+                        <div className="text-xs text-gray-600 mt-0.5">
+                          {checkDescriptions[key as keyof typeof checkDescriptions]}
+                        </div>
+                      </div>
+                    </div>
                   ))}
-                </List>
-              </Paper>
+                </div>
+              </div>
 
-              {/* Additional Details */}
+              {/* Details */}
               {verificationResult.details && (
-                <Paper sx={{ p: 3 }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Typography variant="h6">Verification Details</Typography>
-                    <IconButton onClick={() => setShowDetails(!showDetails)}>
-                      {showDetails ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                    </IconButton>
-                  </Box>
-
-                  <Collapse in={showDetails}>
-                    <Box sx={{ mt: 2 }}>
-                      {verificationResult.details.approvalThreshold && (
-                        <Box sx={{ mb: 2 }}>
-                          <Typography variant="subtitle2" color="text.secondary">
-                            <GroupsIcon sx={{ fontSize: 16, verticalAlign: 'text-bottom', mr: 0.5 }} />
-                            Approval Status
-                          </Typography>
-                          <Typography variant="body1">
-                            {verificationResult.details.approvalCount} of {verificationResult.details.approvalThreshold} required approvals
-                          </Typography>
-                          <Box sx={{ mt: 1 }}>
-                            <Chip
-                              label={`${verificationResult.details.approvalCount}/${verificationResult.details.approvalThreshold}`}
-                              color={verificationResult.checks.thresholdMet ? 'success' : 'error'}
-                              size="small"
-                            />
-                          </Box>
-                        </Box>
-                      )}
-
-                      {verificationResult.details.merkleRootSource && (
-                        <Box sx={{ mb: 2 }}>
-                          <Typography variant="subtitle2" color="text.secondary">
-                            <AccountTreeIcon sx={{ fontSize: 16, verticalAlign: 'text-bottom', mr: 0.5 }} />
-                            Merkle Root Source
-                          </Typography>
-                          <Chip
-                            label={verificationResult.details.merkleRootSource}
-                            variant="outlined"
-                            size="small"
-                          />
-                        </Box>
-                      )}
-
-                      {verificationResult.details.errors && verificationResult.details.errors.length > 0 && (
-                        <Box>
-                          <Typography variant="subtitle2" color="error">
-                            Errors
-                          </Typography>
-                          {verificationResult.details.errors.map((err, idx) => (
-                            <Alert severity="error" sx={{ mt: 1 }} key={idx}>
-                              {err}
-                            </Alert>
-                          ))}
-                        </Box>
-                      )}
-                    </Box>
-                  </Collapse>
-                </Paper>
+                <div className="border-t pt-4">
+                  <h3 className="text-sm font-semibold text-gray-900 mb-3">Details</h3>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {verificationResult.details.issuer && (
+                      <div className="bg-gray-50 rounded-lg p-3">
+                        <label className="text-xs font-medium text-gray-600">Issuer</label>
+                        <p className="text-sm font-mono mt-1 break-all">
+                          {verificationResult.details.issuer}
+                        </p>
+                      </div>
+                    )}
+                    {verificationResult.details.approvalCount !== undefined && (
+                      <div className="bg-gray-50 rounded-lg p-3">
+                        <label className="text-xs font-medium text-gray-600">Approval Count</label>
+                        <p className="text-sm mt-1">
+                          {verificationResult.details.approvalCount} / {verificationResult.details.approvalThreshold}
+                        </p>
+                      </div>
+                    )}
+                    {verificationResult.details.merkleRootSource && (
+                      <div className="bg-gray-50 rounded-lg p-3">
+                        <label className="text-xs font-medium text-gray-600">Merkle Root Source</label>
+                        <p className="text-sm mt-1">
+                          <Badge variant="info" size="sm">
+                            {verificationResult.details.merkleRootSource}
+                          </Badge>
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
               )}
-            </>
+
+              {/* Errors */}
+              {verificationResult.details?.errors && verificationResult.details.errors.length > 0 && (
+                <div className="border-t pt-4">
+                  <h3 className="text-sm font-semibold text-red-900 mb-2">Errors</h3>
+                  <div className="space-y-1">
+                    {verificationResult.details.errors.map((error, idx) => (
+                      <div key={idx} className="text-sm text-red-700 flex items-start">
+                        <span className="mr-2">•</span>
+                        <span>{error}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </CardContent>
+
+          {inspectResult && (
+            <CardFooter>
+              <Button
+                onClick={() => setShowDetails(!showDetails)}
+                variant="outline"
+                className="w-full"
+                icon={
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={showDetails ? "M19 9l-7 7-7-7" : "M9 5l7 7-7 7"} />
+                  </svg>
+                }
+              >
+                {showDetails ? 'Hide' : 'Show'} Credential Details
+              </Button>
+            </CardFooter>
           )}
-        </Grid>
-      </Grid>
+        </Card>
+      )}
+
+      {/* Credential Details */}
+      {showDetails && inspectResult && (
+        <div className="space-y-4">
+          {/* Subject Information */}
+          {inspectResult.subject && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Subject Information</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <pre className="bg-gray-50 rounded-lg p-4 text-xs overflow-x-auto">
+                  {JSON.stringify(inspectResult.subject, null, 2)}
+                </pre>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Evidence */}
+          {inspectResult.evidence && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Anonymous Approval Evidence</CardTitle>
+                <CardDescription>
+                  Cryptographic proofs of anonymous multi-party approval
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <pre className="bg-blue-50 rounded-lg p-4 text-xs overflow-x-auto">
+                  {JSON.stringify(inspectResult.evidence, null, 2)}
+                </pre>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Full Decoded Credential */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Full Decoded Credential</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <pre className="bg-gray-50 rounded-lg p-4 text-xs overflow-x-auto">
+                {JSON.stringify(inspectResult.decoded, null, 2)}
+              </pre>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Inspect-only Results */}
+      {!verificationResult && inspectResult && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Credential Inspection</CardTitle>
+            <CardDescription>
+              Decoded credential without verification
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Alert variant="warning" className="mb-4">
+              This credential has been decoded but not verified. Run verification to check its validity.
+            </Alert>
+            <pre className="bg-gray-50 rounded-lg p-4 text-xs overflow-x-auto">
+              {JSON.stringify(inspectResult, null, 2)}
+            </pre>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

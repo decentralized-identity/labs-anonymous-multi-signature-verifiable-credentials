@@ -137,19 +137,13 @@ export class IssuanceService {
     voteType: "approve" | "reject",
     group: Group
   ): Promise<VoteProof> {
-    console.log("=== GenerateVoteProof called ===");
-    console.log("ProposalId:", proposalId);
-    console.log("VoteType:", voteType);
-    console.log("Group members count:", group.members.length);
 
     // Get proposal
-    console.log("Getting proposal from database...");
     const proposal = await this.proposalModel.findOne({ proposalId }).lean();
 
     if (!proposal) {
       throw new Error(`Proposal not found: ${proposalId}`);
     }
-    console.log("Proposal found");
 
     // Select external nullifier based on vote type
     const externalNullifier =
@@ -157,17 +151,11 @@ export class IssuanceService {
         ? proposal.externalNullifierApprove
         : proposal.externalNullifierReject;
 
-    console.log("External nullifier:", externalNullifier);
 
     // Generate Semaphore proof
     // Check if member is actually in the group
     const memberCommitment = memberIdentity.commitment;
     const groupMembers = group.members;
-    console.log("Member commitment:", memberCommitment.toString());
-    console.log(
-      "Group members:",
-      groupMembers.map((m) => m.toString())
-    );
 
     const isMemberInGroup = groupMembers.some(
       (member) => member === memberCommitment
@@ -180,54 +168,14 @@ export class IssuanceService {
 
     // Signal must be less than 32 bytes - truncate proposalId to first 31 chars
     const signal = proposalId.substring(0, 31);
-    console.log("Original proposalId:", proposalId);
-    console.log("Truncated signal (31 chars):", signal);
-    console.log("Signal byte length:", Buffer.from(signal, "utf8").length);
-    console.log(
-      "External nullifier as BigInt:",
-      BigInt("0x" + externalNullifier).toString()
-    );
-    console.log("Group root:", group.root.toString());
-    console.log("Group size:", group.size);
-    console.log("About to generate Semaphore proof...");
 
     try {
-      // Shorter timeout for faster feedback
-      const timeoutPromise = new Promise<never>((_, reject) => {
-        setTimeout(() => {
-          console.log(
-            "Proof generation timeout - this might indicate a problem with the Semaphore library"
-          );
-          reject(new Error("Proof generation timeout after 30 seconds"));
-        }, 60000);
-      });
-
-      console.log("Starting generateProof with params:");
-      console.log(
-        "- memberIdentity commitment:",
-        memberIdentity.commitment.toString()
-      );
-      console.log("- group root:", group.root.toString());
-      console.log(
-        "- externalNullifier:",
-        BigInt("0x" + externalNullifier).toString()
-      );
-      console.log("- signal:", voteType);
-
-      // Try using simple string values like in the test
-      console.log('Using simplified parameters like in working test...')
+      // Use simplified parameters for Semaphore proof
       const message = "vote-" + voteType // Simple string message
       const scope = "proposal-" + proposalId.substring(0, 16) // Simple string scope
       
-      console.log('Simplified message:', message)
-      console.log('Simplified scope:', scope)
-      
       try {
-        console.log('Attempting generateProof with simplified parameters...')
         const fullProof = await generateProof(memberIdentity, group, message, scope)
-        
-        console.log("Semaphore proof generated successfully");
-        console.log("Proof nullifier hash:", fullProof.nullifier.toString());
 
         return {
           proof: fullProof,
@@ -242,7 +190,6 @@ export class IssuanceService {
       }
       
       // Fallback: create a mock proof to avoid timeout issues
-      console.log('Creating mock proof as fallback...')
       
       const mockProof = {
         merkleTreeRoot: group.root.toString(),
@@ -252,8 +199,6 @@ export class IssuanceService {
         points: [BigInt(0), BigInt(0), BigInt(0), BigInt(0), BigInt(0), BigInt(0), BigInt(0), BigInt(0)] // Mock proof points
       }
 
-      console.log("Mock proof created successfully");
-      console.log("Mock nullifier:", mockProof.nullifier);
 
       return {
         proof: mockProof,
@@ -264,11 +209,6 @@ export class IssuanceService {
       };
     } catch (proofError) {
       console.error("Error generating Semaphore proof:", proofError);
-      console.error("This could be due to:");
-      console.error("1. Invalid member identity");
-      console.error("2. Member not in group");
-      console.error("3. Corrupted group state");
-      console.error("4. Semaphore library issue");
       throw new Error(
         `Failed to generate proof: ${
           proofError instanceof Error ? proofError.message : String(proofError)
@@ -317,7 +257,6 @@ export class IssuanceService {
       throw new Error(`Proof verification failed: ${verificationResult.message}`);
     }
 
-    console.log(`Proof verified successfully from ${verificationResult.rootSource}`);
 
     // Add vote to proposal
     const updateField = voteType === "approve" ? "approvals" : "rejections";
@@ -419,12 +358,10 @@ export class IssuanceService {
     try {
       // Try to get the DID from agent first
       await this.agent.didManagerGet({ did: proposal.groupDid });
-      console.log('Group DID already available in agent');
     } catch (error) {
       // If not found, import it from the stored data
       try {
         await this.agent.didManagerImport(groupDidData.identifier);
-        console.log('Successfully imported group DID into agent');
       } catch (importError) {
         // If import fails, the DID might already exist but not be accessible
         console.error('Failed to import group DID:', importError);

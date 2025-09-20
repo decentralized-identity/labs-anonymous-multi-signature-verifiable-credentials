@@ -93,10 +93,15 @@ export class IssuanceController {
 
       const vc = await this.issuanceService.issueVCWithEvidence(proposalId);
 
+      // Extract JWT from the VC proof
+      const jwt = vc.proof?.jwt || '';
+
       return {
         success: true,
         data: {
+          credential: jwt,
           verifiableCredential: vc,
+          evidence: vc.evidence,
         },
       };
     } catch (error) {
