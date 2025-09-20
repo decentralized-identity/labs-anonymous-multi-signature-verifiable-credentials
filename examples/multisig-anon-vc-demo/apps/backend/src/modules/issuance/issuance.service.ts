@@ -1,12 +1,17 @@
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { Identity } from "@semaphore-protocol/identity";
 import { verifyProof, generateProof } from "@semaphore-protocol/proof";
 import { Group } from "@semaphore-protocol/group";
-import { Agent } from "../veramo/agent";
-import { connectToDatabase } from "../db/mongodb";
-import { Db } from "mongodb";
+import { Agent } from "../../lib/veramo/agent";
 import { randomBytes, createHash } from "crypto";
-import { MerkleRootVerifier } from "./merkle-root-verifier";
-import { GroupDIDService } from "./group-did-service-mongo";
+import { MerkleRootVerifier } from "../verification/merkle-root-verifier";
+import { GroupDIDService } from "../group/group-did.service";
+import { Proposal, ProposalDocument } from './proposal.schema';
+import { IssuedVC, IssuedVCDocument } from './issued-vc.schema';
+import { Group as GroupSchema, GroupDocument, GroupConfig, GroupConfigDocument } from '../group/group.schema';
+import { MerkleRootHistory, MerkleRootHistoryDocument } from '../group/merkle-root-history.schema';
 
 export interface VCClaims {
   subject: string;
@@ -41,21 +46,29 @@ export interface IssuanceProposal {
   totalMembers: number;
 }
 
-let globalServiceInstance: IssuanceService | null = null;
-
+@Injectable()
 export class IssuanceService {
   private agent: Agent | null = null;
-  private db: Db | null = null;
   private merkleRootVerifier: MerkleRootVerifier | null = null;
+
+  constructor(
+    @InjectModel(Proposal.name) private proposalModel: Model<ProposalDocument>,
+    @InjectModel(IssuedVC.name) private issuedVCModel: Model<IssuedVCDocument>,
+    @InjectModel(GroupSchema.name) private groupModel: Model<GroupDocument>,
+    @InjectModel(GroupConfig.name) private groupConfigModel: Model<GroupConfigDocument>,
+    @InjectModel(MerkleRootHistory.name) private merkleRootHistoryModel: Model<MerkleRootHistoryDocument>,
+    private groupDIDService: GroupDIDService
+  ) {}
 
   async initialize(agent: Agent) {
     this.agent = agent;
-    const { db } = await connectToDatabase();
-    this.db = db;
-
+    await this.groupDIDService.initialize(agent);
     // Initialize merkle root verifier
-    const groupDIDService = await GroupDIDService.getInstance(agent);
-    this.merkleRootVerifier = new MerkleRootVerifier(db, groupDIDService);
+    this.merkleRootVerifier = new MerkleRootVerifier(
+      this.groupDIDService,
+      this.groupModel,
+      this.merkleRootHistoryModel
+    );
   }
 
   // Step 1: Create issuance proposal
@@ -64,20 +77,14 @@ export class IssuanceService {
     groupDid: string,
     approvalPolicy: { m: number; n: number }
   ): Promise<IssuanceProposal> {
-    if (!this.db) {
-      throw new Error("Database not initialized");
-    }
-
     // Get group information
-    const groupDIDsCollection = this.db.collection("groupDIDs");
-    const groupData = await groupDIDsCollection.findOne({ did: groupDid });
+    const groupData = await this.groupModel.findOne({ did: groupDid });
 
     if (!groupData) {
       throw new Error(`Group not found for DID: ${groupDid}`);
     }
 
-    const groupConfigsCollection = this.db.collection("groupConfigs");
-    const groupConfig = await groupConfigsCollection.findOne({
+    const groupConfig = await this.groupConfigModel.findOne({
       groupId: groupData.groupId,
     });
 
@@ -118,8 +125,7 @@ export class IssuanceService {
     };
 
     // Store proposal in MongoDB
-    const proposalsCollection = this.db.collection("proposals");
-    await proposalsCollection.insertOne(proposal);
+    await this.proposalModel.create(proposal);
 
     return proposal;
   }
@@ -136,14 +142,9 @@ export class IssuanceService {
     console.log("VoteType:", voteType);
     console.log("Group members count:", group.members.length);
 
-    if (!this.db) {
-      throw new Error("Database not initialized");
-    }
-
     // Get proposal
     console.log("Getting proposal from database...");
-    const proposalsCollection = this.db.collection("proposals");
-    const proposal = await proposalsCollection.findOne({ proposalId });
+    const proposal = await this.proposalModel.findOne({ proposalId }).lean();
 
     if (!proposal) {
       throw new Error(`Proposal not found: ${proposalId}`);
@@ -282,12 +283,8 @@ export class IssuanceService {
     voteProof: VoteProof,
     voteType: "approve" | "reject"
   ): Promise<void> {
-    if (!this.db) {
-      throw new Error("Database not initialized");
-    }
 
-    const proposalsCollection = this.db.collection("proposals");
-    const proposal = await proposalsCollection.findOne({ proposalId });
+    const proposal = await this.proposalModel.findOne({ proposalId }).lean();
 
     if (!proposal) {
       throw new Error(`Proposal not found: ${proposalId}`);
@@ -330,7 +327,7 @@ export class IssuanceService {
     };
     updateDoc.$push[updateField] = voteProof;
 
-    await proposalsCollection.updateOne({ proposalId }, updateDoc);
+    await this.proposalModel.updateOne({ proposalId }, updateDoc);
 
     // Check if threshold is met
     await this.checkAndUpdateProposalStatus(proposalId);
@@ -340,12 +337,8 @@ export class IssuanceService {
   private async checkAndUpdateProposalStatus(
     proposalId: string
   ): Promise<void> {
-    if (!this.db) {
-      throw new Error("Database not initialized");
-    }
 
-    const proposalsCollection = this.db.collection("proposals");
-    const proposal = await proposalsCollection.findOne({ proposalId });
+    const proposal = await this.proposalModel.findOne({ proposalId }).lean();
 
     if (!proposal) {
       throw new Error(`Proposal not found: ${proposalId}`);
@@ -356,7 +349,7 @@ export class IssuanceService {
 
     // Check if approval threshold is met
     if (approvalCount >= proposal.approvalThreshold) {
-      await proposalsCollection.updateOne(
+      await this.proposalModel.updateOne(
         { proposalId },
         { $set: { status: "approved", updatedAt: new Date() } }
       );
@@ -366,7 +359,7 @@ export class IssuanceService {
       rejectionCount >
       proposal.totalMembers - proposal.approvalThreshold
     ) {
-      await proposalsCollection.updateOne(
+      await this.proposalModel.updateOne(
         { proposalId },
         { $set: { status: "rejected", updatedAt: new Date() } }
       );
@@ -375,12 +368,11 @@ export class IssuanceService {
 
   // Step 5: Issue VC with evidence
   async issueVCWithEvidence(proposalId: string): Promise<any> {
-    if (!this.db || !this.agent) {
-      throw new Error("Service not initialized");
+    if (!this.agent) {
+      throw new Error("Agent not initialized");
     }
 
-    const proposalsCollection = this.db.collection("proposals");
-    const proposal = await proposalsCollection.findOne({ proposalId });
+    const proposal = await this.proposalModel.findOne({ proposalId }).lean();
 
     if (!proposal) {
       throw new Error(`Proposal not found: ${proposalId}`);
@@ -391,10 +383,9 @@ export class IssuanceService {
     }
 
     // Get issuer DID
-    const groupDIDsCollection = this.db.collection("groupDIDs");
-    const groupData = await groupDIDsCollection.findOne({
+    const groupData = await this.groupModel.findOne({
       did: proposal.groupDid,
-    });
+    }).lean();
 
     if (!groupData) {
       throw new Error("Group DID not found");
@@ -418,8 +409,7 @@ export class IssuanceService {
     };
 
     // Get the group DID information from MongoDB to import it to the agent
-    const groupDIDsCollection2 = this.db.collection('groupDIDs');
-    const groupDidData = await groupDIDsCollection2.findOne({ did: proposal.groupDid });
+    const groupDidData = await this.groupModel.findOne({ did: proposal.groupDid }).lean();
     
     if (!groupDidData) {
       throw new Error(`Group DID not found: ${proposal.groupDid}`);
@@ -459,8 +449,7 @@ export class IssuanceService {
     });
 
     // Store issued VC
-    const vcsCollection = this.db.collection("issuedVCs");
-    await vcsCollection.insertOne({
+    await this.issuedVCModel.create({
       proposalId,
       vc: verifiableCredential,
       issuedAt: new Date(),
@@ -473,26 +462,11 @@ export class IssuanceService {
 
   // Get proposal details
   async getProposal(proposalId: string): Promise<IssuanceProposal | null> {
-    if (!this.db) {
-      throw new Error("Database not initialized");
-    }
 
-    const proposalsCollection = this.db.collection("proposals");
-    return (await proposalsCollection.findOne({
+    return (await this.proposalModel.findOne({
       proposalId,
     })) as unknown as IssuanceProposal | null;
   }
 
   // Static instance getter
-  static async getInstance(agent?: Agent): Promise<IssuanceService> {
-    if (!globalServiceInstance) {
-      globalServiceInstance = new IssuanceService();
-      if (agent) {
-        await globalServiceInstance.initialize(agent);
-      }
-    } else if (agent && (!globalServiceInstance.agent || !globalServiceInstance.merkleRootVerifier)) {
-      await globalServiceInstance.initialize(agent);
-    }
-    return globalServiceInstance;
-  }
 }

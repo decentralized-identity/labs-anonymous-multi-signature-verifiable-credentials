@@ -1,9 +1,12 @@
-import { Agent } from '../veramo/agent'
-import { SemaphoreGroupManager, SemaphoreGroupConfig } from '../semaphore/group-manager'
+import { Injectable } from '@nestjs/common'
+import { InjectModel } from '@nestjs/mongoose'
+import { Model } from 'mongoose'
+import { Agent } from '../../lib/veramo/agent'
+import { SemaphoreGroupManager, SemaphoreGroupConfig } from '../../lib/semaphore/group-manager'
 import { Identity } from '@semaphore-protocol/identity'
 import { IIdentifier } from '@veramo/core'
-import { connectToDatabase } from '../db/mongodb'
-import { Db } from 'mongodb'
+import { Group, GroupDocument, GroupConfig, GroupConfigDocument } from './group.schema'
+import { MerkleRootHistory, MerkleRootHistoryDocument } from './merkle-root-history.schema'
 
 export interface GroupDIDConfig {
   groupName: string
@@ -16,27 +19,29 @@ export interface GroupDIDConfig {
 const globalGroupManager = new SemaphoreGroupManager()
 let globalServiceInstance: GroupDIDService | null = null
 
+@Injectable()
 export class GroupDIDService {
   private agent: Agent | null = null
   private groupManager: SemaphoreGroupManager
-  private db: Db | null = null
 
-  constructor() {
+  constructor(
+    @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
+    @InjectModel(GroupConfig.name) private groupConfigModel: Model<GroupConfigDocument>,
+    @InjectModel(MerkleRootHistory.name) private merkleRootHistoryModel: Model<MerkleRootHistoryDocument>
+  ) {
     this.groupManager = globalGroupManager
   }
 
   async initialize(agent: Agent) {
     this.agent = agent
-    const { db } = await connectToDatabase()
-    this.db = db
   }
 
   async createGroupDID(config: GroupDIDConfig): Promise<{
     did: IIdentifier
     semaphoreGroup: ReturnType<SemaphoreGroupManager['exportGroupData']>
   }> {
-    if (!this.agent || !this.db) {
-      throw new Error('Service not initialized')
+    if (!this.agent) {
+      throw new Error('Agent not initialized')
     }
 
     // Generate a unique group ID
@@ -69,10 +74,7 @@ export class GroupDIDService {
     console.log('Created DID:', identifier.did)
 
     // Store in MongoDB
-    const groupDIDsCollection = this.db.collection('groupDIDs')
-    const groupConfigsCollection = this.db.collection('groupConfigs')
-
-    await groupDIDsCollection.insertOne({
+    await this.groupModel.create({
       did: identifier.did,
       identifier,
       groupId,
@@ -86,7 +88,7 @@ export class GroupDIDService {
       endpoint: `${process.env.API_BASE_URL || 'http://localhost:3001'}/api/groups/${groupId}/merkle-roots`
     }
 
-    await groupConfigsCollection.insertOne({
+    await this.groupConfigModel.create({
       ...semaphoreConfig,
       members: [],
       merkleRoot: group.root.toString(),
@@ -96,8 +98,7 @@ export class GroupDIDService {
     })
 
     // Initialize merkle root history collection
-    const merkleRootHistoryCollection = this.db.collection('merkleRootHistory')
-    await merkleRootHistoryCollection.insertOne({
+    await this.merkleRootHistoryModel.create({
       groupId,
       root: group.root.toString(),
       blockNumber: null, // Will be null for off-chain groups
@@ -148,11 +149,10 @@ export class GroupDIDService {
     }
 
     // Get archive config from stored group config
-    const groupConfigsCollection = this.db?.collection('groupConfigs')
-    const groupConfig = await groupConfigsCollection?.findOne({ groupId })
+    const groupConfig = await this.groupConfigModel.findOne({ groupId })
 
     // Get total count for archive info
-    const totalRootsCount = await this.db?.collection('merkleRootHistory')
+    const totalRootsCount = await this.merkleRootHistoryModel
       .countDocuments({ groupId }) || 0
 
     // Use stored archive config or generate default
@@ -186,23 +186,17 @@ export class GroupDIDService {
   }
 
   async addMemberToGroup(groupDid: string, memberIdentity: Identity): Promise<void> {
-    if (!this.db) {
-      throw new Error('Database not initialized')
-    }
-
     console.log('Looking for group DID:', groupDid)
-    
+
     // Find group data from MongoDB
-    const groupDIDsCollection = this.db.collection('groupDIDs')
-    const groupData = await groupDIDsCollection.findOne({ did: groupDid })
+    const groupData = await this.groupModel.findOne({ did: groupDid })
     
     if (!groupData) {
       throw new Error(`Group not found for DID: ${groupDid}`)
     }
 
     // Restore group in memory if needed
-    const groupConfigsCollection = this.db.collection('groupConfigs')
-    const groupConfig = await groupConfigsCollection.findOne({ groupId: groupData.groupId })
+    const groupConfig = await this.groupConfigModel.findOne({ groupId: groupData.groupId })
     
     if (!this.groupManager.getGroup(groupData.groupId)) {
       this.groupManager.createGroup(groupConfig as unknown as SemaphoreGroupConfig)
@@ -214,20 +208,19 @@ export class GroupDIDService {
     const newMerkleRoot = this.groupManager.getMerkleRoot(groupData.groupId).toString()
 
     // Update MongoDB with new member
-    await groupConfigsCollection.updateOne(
+    await this.groupConfigModel.updateOne(
       { groupId: groupData.groupId },
-      { 
+      {
         $push: { members: memberIdentity.commitment.toString() } as any,
-        $set: { 
+        $set: {
           merkleRoot: newMerkleRoot,
-          updatedAt: new Date() 
+          updatedAt: new Date()
         }
       }
     )
 
     // Add new merkle root to history
-    const merkleRootHistoryCollection = this.db.collection('merkleRootHistory')
-    await merkleRootHistoryCollection.insertOne({
+    await this.merkleRootHistoryModel.create({
       groupId: groupData.groupId,
       root: newMerkleRoot,
       blockNumber: null, // Will be null for off-chain groups
@@ -237,17 +230,12 @@ export class GroupDIDService {
   }
 
   private async getMerkleRootHistory(groupId: string, limit: number = 10) {
-    if (!this.db) {
-      throw new Error('Database not initialized')
-    }
-
-    const merkleRootHistoryCollection = this.db.collection('merkleRootHistory')
     // Get only the most recent N roots for DID document
-    const history = await merkleRootHistoryCollection
+    const history = await this.merkleRootHistoryModel
       .find({ groupId })
       .sort({ createdAt: -1 }) // Sort by newest first
       .limit(limit) // Only get recent 10
-      .toArray()
+      .exec()
 
     // Reverse to maintain chronological order (oldest to newest)
     return history.reverse().map(entry => ({
@@ -259,12 +247,7 @@ export class GroupDIDService {
 
   // Search for a specific merkle root in the full history (MongoDB archive)
   async searchMerkleRoot(groupId: string, targetRoot: string): Promise<any | null> {
-    if (!this.db) {
-      throw new Error('Database not initialized')
-    }
-
-    const merkleRootHistoryCollection = this.db.collection('merkleRootHistory')
-    const rootEntry = await merkleRootHistoryCollection.findOne({
+    const rootEntry = await this.merkleRootHistoryModel.findOne({
       groupId,
       root: targetRoot
     })
@@ -282,21 +265,15 @@ export class GroupDIDService {
   }
 
   async getGroupInfo(groupDid: string) {
-    if (!this.db) {
-      throw new Error('Database not initialized')
-    }
-
     // Find group data from MongoDB
-    const groupDIDsCollection = this.db.collection('groupDIDs')
-    const groupData = await groupDIDsCollection.findOne({ did: groupDid })
+    const groupData = await this.groupModel.findOne({ did: groupDid })
     
     if (!groupData) {
       throw new Error(`Group not found for DID: ${groupDid}`)
     }
 
     // Get config from MongoDB
-    const groupConfigsCollection = this.db.collection('groupConfigs')
-    const groupConfig = await groupConfigsCollection.findOne({ groupId: groupData.groupId })
+    const groupConfig = await this.groupConfigModel.findOne({ groupId: groupData.groupId })
     
     if (!groupConfig) {
       throw new Error(`Group config not found for ID: ${groupData.groupId}`)
@@ -345,16 +322,4 @@ export class GroupDIDService {
   }
 
   // Static method to get or create global instance
-  static async getInstance(agent?: Agent): Promise<GroupDIDService> {
-    if (!globalServiceInstance) {
-      globalServiceInstance = new GroupDIDService()
-      if (agent) {
-        await globalServiceInstance.initialize(agent)
-      }
-    } else if (agent && (!globalServiceInstance.agent || !globalServiceInstance.db)) {
-      await globalServiceInstance.initialize(agent)
-    }
-    
-    return globalServiceInstance
-  }
 }

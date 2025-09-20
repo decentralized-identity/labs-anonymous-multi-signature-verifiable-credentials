@@ -1,8 +1,11 @@
-import { Agent } from '../veramo/agent'
-import { connectToDatabase } from '../db/mongodb'
-import { Db } from 'mongodb'
+import { Injectable } from '@nestjs/common'
+import { InjectModel } from '@nestjs/mongoose'
+import { Model } from 'mongoose'
+import { Agent } from '../../lib/veramo/agent'
 import { MerkleRootVerifier } from './merkle-root-verifier'
-import { GroupDIDService } from './group-did-service-mongo'
+import { GroupDIDService } from '../group/group-did.service'
+import { Group, GroupDocument } from '../group/group.schema'
+import { MerkleRootHistory, MerkleRootHistoryDocument } from '../group/merkle-root-history.schema'
 
 export interface VerificationResult {
   valid: boolean
@@ -22,19 +25,25 @@ export interface VerificationResult {
   }
 }
 
+@Injectable()
 export class VerificationService {
   private agent: Agent | null = null
-  private db: Db | null = null
   private merkleRootVerifier: MerkleRootVerifier | null = null
+
+  constructor(
+    @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
+    @InjectModel(MerkleRootHistory.name) private merkleRootHistoryModel: Model<MerkleRootHistoryDocument>,
+    private groupDIDService: GroupDIDService
+  ) {}
 
   async initialize(agent: Agent) {
     this.agent = agent
-    const { db } = await connectToDatabase()
-    this.db = db
-
     // Initialize merkle root verifier
-    const groupDIDService = await GroupDIDService.getInstance(agent)
-    this.merkleRootVerifier = new MerkleRootVerifier(db, groupDIDService)
+    this.merkleRootVerifier = new MerkleRootVerifier(
+      this.groupDIDService,
+      this.groupModel,
+      this.merkleRootHistoryModel
+    )
   }
 
   /**
@@ -279,18 +288,4 @@ export class VerificationService {
     }
   }
 
-  // Static instance getter
-  private static instance: VerificationService | null = null
-
-  static async getInstance(agent?: Agent): Promise<VerificationService> {
-    if (!VerificationService.instance) {
-      VerificationService.instance = new VerificationService()
-      if (agent) {
-        await VerificationService.instance.initialize(agent)
-      }
-    } else if (agent && !VerificationService.instance.agent) {
-      await VerificationService.instance.initialize(agent)
-    }
-    return VerificationService.instance
-  }
 }

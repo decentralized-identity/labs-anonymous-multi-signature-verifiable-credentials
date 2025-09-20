@@ -6,11 +6,12 @@ import {
   HttpException,
   HttpStatus,
 } from "@nestjs/common";
-import { initializeAgent } from "@/lib/veramo/agent";
-import { VerificationService } from "@/lib/services/verification-service";
+import { initializeAgent } from "../../lib/veramo/agent";
+import { VerificationService } from "./verification.service";
 
 @Controller("api/verification")
 export class VerificationController {
+  constructor(private readonly verificationService: VerificationService) {}
   /**
    * Verify a Verifiable Credential with multi-party approval
    * POST /api/verification/verify
@@ -28,9 +29,9 @@ export class VerificationController {
       }
 
       const agent = await initializeAgent();
-      const verificationService = await VerificationService.getInstance(agent);
+      await this.verificationService.initialize(agent);
 
-      const result = await verificationService.verifyCredential(credential);
+      const result = await this.verificationService.verifyCredential(credential);
 
       return {
         success: result.valid,
@@ -68,9 +69,9 @@ export class VerificationController {
       }
 
       const agent = await initializeAgent();
-      const verificationService = await VerificationService.getInstance(agent);
+      await this.verificationService.initialize(agent);
 
-      const result = await verificationService.inspectCredential(credential);
+      const result = await this.verificationService.inspectCredential(credential);
 
       if (result.error) {
         throw new HttpException(result.error, HttpStatus.BAD_REQUEST);

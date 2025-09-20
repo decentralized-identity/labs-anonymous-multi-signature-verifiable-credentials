@@ -1,6 +1,8 @@
-import { GroupDIDService } from './group-did-service-mongo'
-import { Db } from 'mongodb'
+import { GroupDIDService } from '../group/group-did.service'
+import { Model } from 'mongoose'
 import { verifyProof } from '@semaphore-protocol/proof'
+import { GroupDocument } from '../group/group.schema'
+import { MerkleRootHistoryDocument } from '../group/merkle-root-history.schema'
 
 export interface MerkleRootEntry {
   root: string
@@ -17,13 +19,11 @@ export interface VerificationResult {
 }
 
 export class MerkleRootVerifier {
-  private db: Db
-  private groupDIDService: GroupDIDService
-
-  constructor(db: Db, groupDIDService: GroupDIDService) {
-    this.db = db
-    this.groupDIDService = groupDIDService
-  }
+  constructor(
+    private groupDIDService: GroupDIDService,
+    private groupModel: Model<GroupDocument>,
+    private merkleRootHistoryModel: Model<MerkleRootHistoryDocument>
+  ) {}
 
   /**
    * Verify a proof with merkle root validation
@@ -142,8 +142,7 @@ export class MerkleRootVerifier {
     // Step 2: If not found in DID document, search MongoDB archive
     try {
       // Extract groupId from the group DID data
-      const groupDIDsCollection = this.db.collection('groupDIDs')
-      const groupData = await groupDIDsCollection.findOne({ did: groupDid })
+      const groupData = await this.groupModel.findOne({ did: groupDid })
 
       if (!groupData) {
         return {
@@ -188,27 +187,28 @@ export class MerkleRootVerifier {
     oldestRoot?: MerkleRootEntry
     newestRoot?: MerkleRootEntry
   }> {
-    const groupDIDsCollection = this.db.collection('groupDIDs')
-    const groupData = await groupDIDsCollection.findOne({ did: groupDid })
+    const groupData = await this.groupModel.findOne({ did: groupDid })
 
     if (!groupData) {
       throw new Error(`Group not found: ${groupDid}`)
     }
 
-    const merkleRootHistoryCollection = this.db.collection('merkleRootHistory')
-
     // Get total count
-    const totalRoots = await merkleRootHistoryCollection.countDocuments({
+    const totalRoots = await this.merkleRootHistoryModel.countDocuments({
       groupId: groupData.groupId
     })
 
     // Get oldest root
-    const oldest = await merkleRootHistoryCollection
-      .findOne({ groupId: groupData.groupId }, { sort: { createdAt: 1 } })
+    const oldest = await this.merkleRootHistoryModel
+      .findOne({ groupId: groupData.groupId })
+      .sort({ createdAt: 1 })
+      .exec()
 
     // Get newest root
-    const newest = await merkleRootHistoryCollection
-      .findOne({ groupId: groupData.groupId }, { sort: { createdAt: -1 } })
+    const newest = await this.merkleRootHistoryModel
+      .findOne({ groupId: groupData.groupId })
+      .sort({ createdAt: -1 })
+      .exec()
 
     // Get group info to count DID document roots
     const groupInfo = await this.groupDIDService.getGroupInfo(groupDid)

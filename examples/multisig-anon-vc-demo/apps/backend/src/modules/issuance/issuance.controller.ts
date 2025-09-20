@@ -1,13 +1,17 @@
 import { Controller, Post, Get, Body, Query, HttpException, HttpStatus } from '@nestjs/common';
-import { initializeAgent } from '@/lib/veramo/agent';
-import { IssuanceService } from '@/lib/services/issuance-service';
-import { GroupDIDService } from '@/lib/services/group-did-service-mongo';
+import { initializeAgent } from '../../lib/veramo/agent';
+import { IssuanceService } from './issuance.service';
+import { GroupDIDService } from '../group/group-did.service';
 import { Identity } from '@semaphore-protocol/identity';
 import { Group } from '@semaphore-protocol/group';
 import { generateProof } from '@semaphore-protocol/proof';
 
 @Controller('issuance')
 export class IssuanceController {
+  constructor(
+    private readonly issuanceService: IssuanceService,
+    private readonly groupDIDService: GroupDIDService
+  ) {}
   @Post('create-proposal')
   async createProposal(@Body() body: {
     vcClaims: any;
@@ -18,9 +22,9 @@ export class IssuanceController {
       const { vcClaims, groupDid, approvalPolicy } = body;
 
       const agent = await initializeAgent();
-      const issuanceService = await IssuanceService.getInstance(agent);
+      await this.issuanceService.initialize(agent);
 
-      const proposal = await issuanceService.createIssuanceProposal(vcClaims, groupDid, approvalPolicy);
+      const proposal = await this.issuanceService.createIssuanceProposal(vcClaims, groupDid, approvalPolicy);
 
       return {
         success: true,
@@ -49,9 +53,9 @@ export class IssuanceController {
       }
 
       const agent = await initializeAgent();
-      const issuanceService = await IssuanceService.getInstance(agent);
+      await this.issuanceService.initialize(agent);
 
-      const proposal = await issuanceService.getProposal(proposalId);
+      const proposal = await this.issuanceService.getProposal(proposalId);
 
       if (!proposal) {
         throw new HttpException(
@@ -85,9 +89,9 @@ export class IssuanceController {
       const { proposalId } = body;
 
       const agent = await initializeAgent();
-      const issuanceService = await IssuanceService.getInstance(agent);
+      await this.issuanceService.initialize(agent);
 
-      const vc = await issuanceService.issueVCWithEvidence(proposalId);
+      const vc = await this.issuanceService.issueVCWithEvidence(proposalId);
 
       return {
         success: true,
@@ -124,12 +128,12 @@ export class IssuanceController {
       console.log('Agent initialized');
       
       console.log('Getting services...');
-      const issuanceService = await IssuanceService.getInstance(agent);
-      const groupDIDService = await GroupDIDService.getInstance(agent);
+      await this.issuanceService.initialize(agent);
+      await this.groupDIDService.initialize(agent);
       console.log('Services initialized');
 
       console.log('Getting group info for DID:', groupDid);
-      const groupInfo = await groupDIDService.getGroupInfo(groupDid);
+      const groupInfo = await this.groupDIDService.getGroupInfo(groupDid);
       console.log('Group info retrieved:', {
         members: groupInfo.semaphoreGroup.members,
         memberCount: groupInfo.semaphoreGroup.memberCount
@@ -162,7 +166,7 @@ export class IssuanceController {
         );
       }
 
-      const voteProof = await issuanceService.generateVoteProof(
+      const voteProof = await this.issuanceService.generateVoteProof(
         proposalId,
         memberIdentity,
         voteType,
@@ -174,9 +178,9 @@ export class IssuanceController {
         voteType
       });
       
-      await issuanceService.submitVote(proposalId, voteProof, voteType);
+      await this.issuanceService.submitVote(proposalId, voteProof, voteType);
 
-      const proposal = await issuanceService.getProposal(proposalId);
+      const proposal = await this.issuanceService.getProposal(proposalId);
 
       console.log('Updated proposal:', proposal);
       return {

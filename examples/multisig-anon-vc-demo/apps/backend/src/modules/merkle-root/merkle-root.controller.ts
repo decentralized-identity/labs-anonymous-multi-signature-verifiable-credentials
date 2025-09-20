@@ -1,8 +1,14 @@
 import { Controller, Get, Param, Query, HttpException, HttpStatus } from '@nestjs/common'
-import { connectToDatabase } from '../lib/db/mongodb'
+import { InjectModel } from '@nestjs/mongoose'
+import { Model } from 'mongoose'
+import { MerkleRootHistory, MerkleRootHistoryDocument } from '../group/merkle-root-history.schema'
 
 @Controller('api/groups/:groupId/merkle-roots')
 export class MerkleRootController {
+  constructor(
+    @InjectModel(MerkleRootHistory.name)
+    private merkleRootHistoryModel: Model<MerkleRootHistoryDocument>
+  ) {}
 
   /**
    * Get merkle root history for a group or search for specific root
@@ -34,10 +40,7 @@ export class MerkleRootController {
     }
 
     try {
-      const { db } = await connectToDatabase()
-      const merkleRootHistoryCollection = db.collection('merkleRootHistory')
-
-      const rootEntry = await merkleRootHistoryCollection.findOne({
+      const rootEntry = await this.merkleRootHistoryModel.findOne({
         groupId,
         root
       })
@@ -75,19 +78,16 @@ export class MerkleRootController {
       const parsedLimit = limit ? parseInt(limit) : 100
       const parsedOffset = offset ? parseInt(offset) : 0
 
-      const { db } = await connectToDatabase()
-      const merkleRootHistoryCollection = db.collection('merkleRootHistory')
-
       // Get total count
-      const totalCount = await merkleRootHistoryCollection.countDocuments({ groupId })
+      const totalCount = await this.merkleRootHistoryModel.countDocuments({ groupId })
 
       // Get paginated results
-      const history = await merkleRootHistoryCollection
+      const history = await this.merkleRootHistoryModel
         .find({ groupId })
         .sort({ createdAt: -1 })
         .skip(parsedOffset)
         .limit(parsedLimit)
-        .toArray()
+        .exec()
 
       const results = history.map(entry => ({
         root: entry.root,
@@ -119,18 +119,19 @@ export class MerkleRootController {
   @Get('stats')
   async getMerkleRootStats(@Param('groupId') groupId: string) {
     try {
-      const { db } = await connectToDatabase()
-      const merkleRootHistoryCollection = db.collection('merkleRootHistory')
-
       // Get total count
-      const totalCount = await merkleRootHistoryCollection.countDocuments({ groupId })
+      const totalCount = await this.merkleRootHistoryModel.countDocuments({ groupId })
 
       // Get oldest and newest
-      const oldest = await merkleRootHistoryCollection
-        .findOne({ groupId }, { sort: { createdAt: 1 } })
+      const oldest = await this.merkleRootHistoryModel
+        .findOne({ groupId })
+        .sort({ createdAt: 1 })
+        .exec()
 
-      const newest = await merkleRootHistoryCollection
-        .findOne({ groupId }, { sort: { createdAt: -1 } })
+      const newest = await this.merkleRootHistoryModel
+        .findOne({ groupId })
+        .sort({ createdAt: -1 })
+        .exec()
 
       return {
         groupId,

@@ -1,12 +1,20 @@
 import { Controller, Post, Get, Body, Param, HttpException, HttpStatus } from '@nestjs/common';
-import { initializeAgent } from '@/lib/veramo/agent';
-import { GroupDIDService } from '@/lib/services/group-did-service-mongo';
-import { MerkleRootVerifier } from '@/lib/services/merkle-root-verifier';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { initializeAgent } from '../../lib/veramo/agent';
+import { GroupDIDService } from './group-did.service';
+import { MerkleRootVerifier } from '../verification/merkle-root-verifier';
 import { Identity } from '@semaphore-protocol/identity';
-import { connectToDatabase } from '@/lib/db/mongodb';
+import { Group, GroupDocument } from './group.schema';
+import { MerkleRootHistory, MerkleRootHistoryDocument } from './merkle-root-history.schema';
 
 @Controller('group')
 export class GroupController {
+  constructor(
+    private readonly groupDIDService: GroupDIDService,
+    @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
+    @InjectModel(MerkleRootHistory.name) private merkleRootHistoryModel: Model<MerkleRootHistoryDocument>
+  ) {}
   @Post('create')
   async createGroup(@Body() body: {
     groupName: string;
@@ -19,16 +27,16 @@ export class GroupController {
       console.log('body', body);
       
       const agent = await initializeAgent();
-      const groupDIDService = await GroupDIDService.getInstance(agent);
+      await this.groupDIDService.initialize(agent);
 
-      const result = await groupDIDService.createGroupDID({
+      const result = await this.groupDIDService.createGroupDID({
         groupName,
         groupDescription,
         semaphoreContractAddress: contractAddress,
         chainId: chainId,
       });
 
-      const groupInfo = await groupDIDService.getGroupInfo(result.did.did);
+      const groupInfo = await this.groupDIDService.getGroupInfo(result.did.did);
 
       return {
         success: true,
@@ -55,13 +63,13 @@ export class GroupController {
       const { groupDid, memberSecret } = body;
 
       const agent = await initializeAgent();
-      const groupDIDService = await GroupDIDService.getInstance(agent);
+      await this.groupDIDService.initialize(agent);
 
       const memberIdentity = new Identity(memberSecret);
 
-      await groupDIDService.addMemberToGroup(groupDid, memberIdentity);
+      await this.groupDIDService.addMemberToGroup(groupDid, memberIdentity);
 
-      const groupInfo = await groupDIDService.getGroupInfo(groupDid);
+      const groupInfo = await this.groupDIDService.getGroupInfo(groupDid);
 
       return {
         success: true,
@@ -85,10 +93,13 @@ export class GroupController {
   @Get(':groupDid/merkle-roots/stats')
   async getMerkleRootStats(@Param('groupDid') groupDid: string) {
     try {
-      const { db } = await connectToDatabase();
       const agent = await initializeAgent();
-      const groupDIDService = await GroupDIDService.getInstance(agent);
-      const merkleRootVerifier = new MerkleRootVerifier(db, groupDIDService);
+      await this.groupDIDService.initialize(agent);
+      const merkleRootVerifier = new MerkleRootVerifier(
+        this.groupDIDService,
+        this.groupModel,
+        this.merkleRootHistoryModel
+      );
 
       const stats = await merkleRootVerifier.getRootHistoryStats(groupDid);
 
