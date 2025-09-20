@@ -4,7 +4,7 @@
   "private": true,
   "description": "Example implementation of anonymous multi-party approval for verifiable credentials",
   "scripts": {
-    "dev": "pnpm --filter frontend dev",
+    "dev:frontend": "pnpm --filter frontend dev",
     "dev:backend": "pnpm --filter backend dev",
     "dev:all": "pnpm --parallel --filter \"frontend\" --filter \"backend\" dev",
     "build": "pnpm --recursive build",

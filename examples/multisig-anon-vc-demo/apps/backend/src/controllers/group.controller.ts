@@ -1,7 +1,9 @@
-import { Controller, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, HttpException, HttpStatus } from '@nestjs/common';
 import { initializeAgent } from '@/lib/veramo/agent';
 import { GroupDIDService } from '@/lib/services/group-did-service-mongo';
+import { MerkleRootVerifier } from '@/lib/services/merkle-root-verifier';
 import { Identity } from '@semaphore-protocol/identity';
+import { connectToDatabase } from '@/lib/db/mongodb';
 
 @Controller('group')
 export class GroupController {
@@ -74,6 +76,32 @@ export class GroupController {
         {
           success: false,
           error: error instanceof Error ? error.message : 'Unknown error'
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Get(':groupDid/merkle-roots/stats')
+  async getMerkleRootStats(@Param('groupDid') groupDid: string) {
+    try {
+      const { db } = await connectToDatabase();
+      const agent = await initializeAgent();
+      const groupDIDService = await GroupDIDService.getInstance(agent);
+      const merkleRootVerifier = new MerkleRootVerifier(db, groupDIDService);
+
+      const stats = await merkleRootVerifier.getRootHistoryStats(groupDid);
+
+      return {
+        success: true,
+        data: stats
+      };
+    } catch (error) {
+      console.error('Error getting merkle root stats:', error);
+      throw new HttpException(
+        {
+          success: false,
+          error: error instanceof Error ? error.message : 'Failed to get merkle root statistics'
         },
         HttpStatus.INTERNAL_SERVER_ERROR
       );

@@ -5,6 +5,8 @@ import { Agent } from "../veramo/agent";
 import { connectToDatabase } from "../db/mongodb";
 import { Db } from "mongodb";
 import { randomBytes, createHash } from "crypto";
+import { MerkleRootVerifier } from "./merkle-root-verifier";
+import { GroupDIDService } from "./group-did-service-mongo";
 
 export interface VCClaims {
   subject: string;
@@ -44,11 +46,16 @@ let globalServiceInstance: IssuanceService | null = null;
 export class IssuanceService {
   private agent: Agent | null = null;
   private db: Db | null = null;
+  private merkleRootVerifier: MerkleRootVerifier | null = null;
 
   async initialize(agent: Agent) {
     this.agent = agent;
     const { db } = await connectToDatabase();
     this.db = db;
+
+    // Initialize merkle root verifier
+    const groupDIDService = await GroupDIDService.getInstance(agent);
+    this.merkleRootVerifier = new MerkleRootVerifier(db, groupDIDService);
   }
 
   // Step 1: Create issuance proposal
@@ -297,12 +304,23 @@ export class IssuanceService {
       throw new Error("Duplicate vote detected");
     }
 
-    // Verify the proof - use the proof object directly
-    const isValid = await verifyProof(voteProof.proof);
-
-    if (!isValid) {
-      throw new Error("Invalid proof");
+    // Verify the proof with merkle root validation
+    if (!this.merkleRootVerifier) {
+      throw new Error("Merkle root verifier not initialized");
     }
+
+    const verificationResult = await this.merkleRootVerifier.verifyProofWithRoot(
+      proposal.groupDid,
+      voteProof.proof,
+      voteProof.merkleTreeRoot,
+      30 * 24 * 60 * 60 * 1000 // Max root age: 30 days
+    );
+
+    if (!verificationResult.valid) {
+      throw new Error(`Proof verification failed: ${verificationResult.message}`);
+    }
+
+    console.log(`Proof verified successfully from ${verificationResult.rootSource}`);
 
     // Add vote to proposal
     const updateField = voteType === "approve" ? "approvals" : "rejections";
@@ -472,7 +490,7 @@ export class IssuanceService {
       if (agent) {
         await globalServiceInstance.initialize(agent);
       }
-    } else if (agent && !globalServiceInstance.agent) {
+    } else if (agent && (!globalServiceInstance.agent || !globalServiceInstance.merkleRootVerifier)) {
       await globalServiceInstance.initialize(agent);
     }
     return globalServiceInstance;

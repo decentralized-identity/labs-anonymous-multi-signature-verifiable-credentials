@@ -80,10 +80,17 @@ export class GroupDIDService {
       updatedAt: new Date()
     })
 
+    // Generate archive config with group-specific endpoint
+    const archiveConfig = {
+      type: 'MongoDB',
+      endpoint: `${process.env.API_BASE_URL || 'http://localhost:3001'}/api/groups/${groupId}/merkle-roots`
+    }
+
     await groupConfigsCollection.insertOne({
       ...semaphoreConfig,
       members: [],
       merkleRoot: group.root.toString(),
+      archiveConfig,
       createdAt: new Date(),
       updatedAt: new Date()
     })
@@ -140,11 +147,28 @@ export class GroupDIDService {
       })
     }
 
-    // MerkleRootHistory service with embedded roots
+    // Get archive config from stored group config
+    const groupConfigsCollection = this.db?.collection('groupConfigs')
+    const groupConfig = await groupConfigsCollection?.findOne({ groupId })
+
+    // Get total count for archive info
+    const totalRootsCount = await this.db?.collection('merkleRootHistory')
+      .countDocuments({ groupId }) || 0
+
+    // Use stored archive config or generate default
+    const archiveInfo = groupConfig?.archiveConfig || {
+      type: 'MongoDB',
+      endpoint: `${process.env.API_BASE_URL || 'http://localhost:3001'}/api/groups/${groupId}/merkle-roots`
+    }
+
     services.push({
       id: `${identifier.did}#merkle-roots-history`,
       type: 'MerkleRootHistory',
-      merkleRoots: merkleRootHistory,
+      recentRoots: merkleRootHistory, // Only recent 10 roots
+      archiveInfo: {
+        ...archiveInfo,
+        totalRoots: totalRootsCount
+      }
     })
 
     return {
@@ -212,22 +236,49 @@ export class GroupDIDService {
     })
   }
 
-  private async getMerkleRootHistory(groupId: string) {
+  private async getMerkleRootHistory(groupId: string, limit: number = 10) {
     if (!this.db) {
       throw new Error('Database not initialized')
     }
 
     const merkleRootHistoryCollection = this.db.collection('merkleRootHistory')
+    // Get only the most recent N roots for DID document
     const history = await merkleRootHistoryCollection
       .find({ groupId })
-      .sort({ createdAt: 1 })
+      .sort({ createdAt: -1 }) // Sort by newest first
+      .limit(limit) // Only get recent 10
       .toArray()
 
-    return history.map(entry => ({
+    // Reverse to maintain chronological order (oldest to newest)
+    return history.reverse().map(entry => ({
       root: entry.root,
       blockNumber: entry.blockNumber,
       timestamp: entry.timestamp,
     }))
+  }
+
+  // Search for a specific merkle root in the full history (MongoDB archive)
+  async searchMerkleRoot(groupId: string, targetRoot: string): Promise<any | null> {
+    if (!this.db) {
+      throw new Error('Database not initialized')
+    }
+
+    const merkleRootHistoryCollection = this.db.collection('merkleRootHistory')
+    const rootEntry = await merkleRootHistoryCollection.findOne({
+      groupId,
+      root: targetRoot
+    })
+
+    if (!rootEntry) {
+      return null
+    }
+
+    return {
+      root: rootEntry.root,
+      blockNumber: rootEntry.blockNumber,
+      timestamp: rootEntry.timestamp,
+      createdAt: rootEntry.createdAt
+    }
   }
 
   async getGroupInfo(groupDid: string) {
