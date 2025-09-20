@@ -3,9 +3,10 @@
 import { useState } from 'react'
 import GroupSetup from '@/components/GroupSetup'
 import IssuancePhase from '@/components/IssuancePhase'
+import VerificationPhase from '@/components/VerificationPhase'
 
 export default function Home() {
-  const [phase, setPhase] = useState<'setup' | 'issuance'>('setup')
+  const [phase, setPhase] = useState<'setup' | 'issuance' | 'verification'>('setup')
   const [selectedGroupDid, setSelectedGroupDid] = useState('')
 
   const handleGroupCreated = (groupDid: string) => {
@@ -35,11 +36,22 @@ export default function Home() {
               disabled={!selectedGroupDid}
               className={`px-4 py-2 rounded-md ${
                 phase === 'issuance' && selectedGroupDid
-                  ? 'bg-blue-600 text-white' 
+                  ? 'bg-blue-600 text-white'
                   : 'bg-gray-200 text-gray-400 cursor-not-allowed'
               }`}
             >
               Issuance Phase
+            </button>
+
+            <button
+              onClick={() => setPhase('verification')}
+              className={`px-4 py-2 rounded-md ${
+                phase === 'verification'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              }`}
+            >
+              Verification Phase
             </button>
           </div>
           
@@ -57,6 +69,10 @@ export default function Home() {
 
       {phase === 'issuance' && selectedGroupDid && (
         <IssuancePhase groupDid={selectedGroupDid} />
+      )}
+
+      {phase === 'verification' && (
+        <VerificationPhase />
       )}
     </main>
   )

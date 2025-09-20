@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { Identity } from '@semaphore-protocol/identity'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import CheckIcon from '@mui/icons-material/Check'
 
 interface VCClaims {
   subject: string
@@ -46,7 +48,8 @@ export default function IssuancePhase({ groupDid }: { groupDid: string }) {
   })
   
   const [memberSecret, setMemberSecret] = useState('')
-  const [issuedVC, setIssuedVC] = useState<unknown>(null)
+  const [issuedVC, setIssuedVC] = useState<any>(null)
+  const [copied, setCopied] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -417,7 +420,45 @@ export default function IssuancePhase({ groupDid }: { groupDid: string }) {
                 <p>The VC includes cryptographic evidence of the anonymous multi-party approval.</p>
               </div>
 
-              <h3 className="text-lg font-semibold mb-2">Issued Verifiable Credential:</h3>
+              {/* JWT Token for Verification */}
+              {issuedVC?.proof?.jwt && (
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-lg font-semibold text-blue-900">JWT Token for Verification</h3>
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(issuedVC.proof.jwt)
+                        setCopied(true)
+                        setTimeout(() => setCopied(false), 2000)
+                      }}
+                      className="flex items-center gap-2 px-3 py-1.5 text-sm bg-white border border-blue-300 rounded-md hover:bg-blue-50 transition-colors"
+                    >
+                      {copied ? (
+                        <>
+                          <CheckIcon style={{ fontSize: 16 }} />
+                          Copied!
+                        </>
+                      ) : (
+                        <>
+                          <ContentCopyIcon style={{ fontSize: 16 }} />
+                          Copy JWT
+                        </>
+                      )}
+                    </button>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-3">
+                    Copy this JWT token and paste it in the Verification Phase to verify the credential
+                  </p>
+                  <div className="bg-white rounded-md p-3 border border-blue-200">
+                    <code className="text-xs break-all text-gray-700">
+                      {issuedVC.proof.jwt}
+                    </code>
+                  </div>
+                </div>
+              )}
+
+              {/* Full Credential Details */}
+              <h3 className="text-lg font-semibold mb-2">Full Credential Details:</h3>
               <pre className="bg-gray-50 p-4 rounded-md overflow-x-auto text-xs">
                 {JSON.stringify(issuedVC, null, 2)}
               </pre>
