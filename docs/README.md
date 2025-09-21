@@ -1,8 +1,8 @@
-# Anonymous Multi-Party Approval Protocol Specification
+# zkMAP - Zero-Knowledge Multi-party Approval Protocol Specification
 
 ### 1. Introduction
 
-This document specifies a way for issuing W3C Verifiable Credentials (VCs) or IETF SD-JWT VCs based on anonymous, multi-party approval from a group of members. It combines the cryptographic privacy of the Semaphore zero-knowledge protocol with existing decentralized identity standards to enable organizations like DAOs, committees, or multi-stakeholder boards to collectively issue credentials without revealing the identities of the participating signers.
+This document specifies zkMAP (Zero-Knowledge Multi-party Approval Protocol), a way for issuing W3C Verifiable Credentials (VCs) or IETF SD-JWT VCs based on anonymous, multi-party approval from a group of members. It combines the cryptographic privacy of the Semaphore zero-knowledge protocol with existing decentralized identity standards to enable organizations like DAOs, committees, or multi-stakeholder boards to collectively issue credentials without revealing the identities of the participating signers.
 
 The primary goal is to provide a standardized mechanism for `m-of-n` VC issuance that is compatible with standard VC formats and verification workflows while preserving internal member anonymity.
 
@@ -199,4 +199,4 @@ This approach ensures DID documents remain small while maintaining full verifiab
 
 ## Implementation
 
-See the [multisig-anon-vc-demo example](../examples/multisig-anon-vc-demo/README.md) for a complete implementation of this protocol.
+See the [zkMAP demo example](../examples/zkmap-demo/README.md) for a complete implementation of the zkMAP protocol.
