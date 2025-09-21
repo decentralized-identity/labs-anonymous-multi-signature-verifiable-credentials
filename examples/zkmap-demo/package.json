@@ -1,8 +1,8 @@
 {
-  "name": "@examples/multisig-anon-vc-demo",
-  "version": "0.1.0",
+  "name": "@examples/zkmap-demo",
+  "version": "0.0.1",
   "private": true,
-  "description": "Example implementation of anonymous multi-party approval for verifiable credentials",
+  "description": "Example implementation of zkMAP (Zero-Knowledge Multi-party Approval Protocol) for verifiable credentials",
   "scripts": {
     "dev:frontend": "pnpm --filter frontend dev",
     "dev:backend": "pnpm --filter backend dev",

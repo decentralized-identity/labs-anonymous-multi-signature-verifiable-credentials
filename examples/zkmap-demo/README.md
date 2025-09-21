@@ -1,13 +1,13 @@
-# Multisig Anonymous VC Demo
+# zkMAP Demo
 
-Example implementation of the Anonymous Multi-Party Approval Protocol for Verifiable Credentials.
+Example implementation of zkMAP (Zero-Knowledge Multi-party Approval Protocol) for Verifiable Credentials.
 
 이 프로젝트는 pnpm 모노레포 구조로 변환되었으며, Next.js API는 NestJS 백엔드로 분리되었습니다.
 
 ## 프로젝트 구조
 
 ```
-multisig-anon-vc-demo/
+zkmap-demo/
 ├── apps/
 │   ├── frontend/          # Next.js frontend application (포트 3000)
 │   └── backend/           # NestJS backend application (포트 3001)
@@ -32,7 +32,7 @@ pnpm install
 ```env
 INFURA_PROJECT_ID=your_infura_project_id_here
 KMS_SECRET_KEY=your-secret-key-at-least-32-chars-long1234567890
-MONGODB_URI=mongodb://localhost:27017/multisig-anon-vc-demo
+MONGODB_URI=mongodb://localhost:27017/zkmap-demo
 ```
 
 프론트엔드 환경변수 (`apps/frontend/.env.local`):
@@ -112,7 +112,7 @@ pnpm --filter frontend build
 
 ## 원본 프로젝트 정보
 
-This demo implements the Setup Phase of the Anonymous Multi-Party Approval Protocol for Verifiable Credentials. It demonstrates creating a DID for a Semaphore group (not individual members) and publishing the group information in the DID Document.
+This demo implements the Setup Phase of zkMAP (Zero-Knowledge Multi-party Approval Protocol) for Verifiable Credentials. It demonstrates creating a DID for a Semaphore group (not individual members) and publishing the group information in the DID Document.
 
 ## Features
 

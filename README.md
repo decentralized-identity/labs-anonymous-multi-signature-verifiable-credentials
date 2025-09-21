@@ -1,6 +1,7 @@
-# Anonymous Multi-Party Approval Protocol for Verifiable Credentials
+# zkMAP - Zero-Knowledge Multi-party Approval Protocol for Verifiable Credentials
+[![DIF Labs Project](https://img.shields.io/badge/DIF_Labs_Project-v1-black?style=for-the-badge&labelColor=%23000000&color=%2300ff00)](https://github.com/decentralized-identity/labs/blob/main/proposals/beta-cohort-2-2025/pp-revocation-mechanism/001_proposal.md
 
-A comprehensive implementation of anonymous multi-party approval systems for verifiable credentials using Semaphore zero-knowledge proofs.
+A comprehensive implementation of zkMAP (Zero-Knowledge Multi-party Approval Protocol) for verifiable credentials using Semaphore zero-knowledge proofs.
 
 ## 🏗️ Project Structure
 
@@ -8,8 +9,15 @@ A comprehensive implementation of anonymous multi-party approval systems for ver
 .
 ├── docs/           # Protocol documentation and specifications
 ├── examples/       # Example implementations
-│   └── multisig-anon-vc-demo/  # Full-stack demo application
-└── packages/       # Reusable packages (planned)
+│   └── zkmap-demo/              # Full-stack zkMAP demo application
+└── packages/       # Core zkMAP packages
+    ├── @zkmap/core       # Main protocol implementation
+    ├── @zkmap/identity   # Identity management
+    ├── @zkmap/group      # Group management
+    ├── @zkmap/proposal   # Proposal and voting
+    ├── @zkmap/credential # VC issuance/verification
+    ├── @zkmap/proof      # ZK proof generation
+    └── @zkmap/storage    # Storage adapters
 ```
 
 ## 🚀 Quick Start
@@ -24,14 +32,14 @@ pnpm install
 pnpm dev:example
 
 # Or navigate to the example directly
-cd examples/multisig-anon-vc-demo
+cd examples/zkmap-demo
 pnpm dev:all
 ```
 
 ## 📚 Documentation
 
 - [Protocol Documentation](./docs/README.md)
-- [Example Implementation](./examples/multisig-anon-vc-demo/README.md)
+- [Example Implementation](./examples/zkmap-demo/README.md)
 - [API Reference](./docs/api-reference.md)
 
 ## 🔑 Key Features
@@ -67,13 +75,13 @@ pnpm dev:all
 
 ## 📦 Reference Implementation
 
-This repository provides a reference implementation of the Anonymous Multi-Party Approval Protocol specification, including utility libraries to make it easier to implement this specification:
+This repository provides a reference implementation of zkMAP (Zero-Knowledge Multi-party Approval Protocol), including core packages to make it easier to implement this protocol:
 
-- **Utility libraries** provide reusable components and helper functions
+- **Core packages** (`@zkmap/*`) provide reusable components and protocol implementation
 - **Protocol specification** documented in `./docs/README.md`
-- **Working demo** available in `./examples/multisig-anon-vc-demo/`
+- **Working demo** available in `./examples/zkmap-demo/`
 
-The utility libraries are designed to simplify the implementation of the protocol by handling complex cryptographic operations, DID document management, and verification workflows.
+The zkMAP packages are designed to simplify the implementation of the protocol by handling complex cryptographic operations, DID document management, and verification workflows.
 
 ## 🤝 Contributing
 
