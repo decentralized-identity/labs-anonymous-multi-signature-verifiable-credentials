@@ -1,13 +1,21 @@
 {
-  "name": "anon-multiparty-vc",
-  "version": "0.1.0",
+  "name": "zkmap",
+  "version": "0.0.1",
   "private": true,
-  "description": "Anonymous Multi-Party Approval Protocol for Verifiable Credentials",
+  "description": "zkMAP - Zero-Knowledge Multi-party Approval Protocol for Verifiable Credentials",
   "scripts": {
-    "dev:example": "cd examples/multisig-anon-vc-demo && pnpm dev:all",
+    "dev:example": "cd examples/zkmap-demo && pnpm dev:all",
     "build": "pnpm --recursive build",
     "lint": "pnpm --recursive lint",
-    "test": "pnpm --recursive test"
+    "test": "pnpm --recursive test",
+    "build:packages": "pnpm run build:identity && pnpm run build:group && pnpm run build:proof && pnpm run build:storage && pnpm run build:proposal && pnpm run build:credential && pnpm run build:core",
+    "build:identity": "pnpm --filter @zkmap/identity build",
+    "build:group": "pnpm --filter @zkmap/group build",
+    "build:proof": "pnpm --filter @zkmap/proof build",
+    "build:storage": "pnpm --filter @zkmap/storage build",
+    "build:proposal": "pnpm --filter @zkmap/proposal build",
+    "build:credential": "pnpm --filter @zkmap/credential build",
+    "build:core": "pnpm --filter @zkmap/core build"
   },
   "devDependencies": {
     "@types/node": "^20",

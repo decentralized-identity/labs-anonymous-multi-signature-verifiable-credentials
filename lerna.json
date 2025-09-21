@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "npmClient": "pnpm",
+  "packages": ["packages/*"],
+  "command": {
+    "publish": {
+      "conventionalCommits": true,
+      "message": "chore(release): publish"
+    },
+    "bootstrap": {
+      "hoist": true
+    }
+  }
+}
