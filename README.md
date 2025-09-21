@@ -1,5 +1,5 @@
 # zkMAP - Zero-Knowledge Multi-party Approval Protocol for Verifiable Credentials
-[![DIF Labs Project](https://img.shields.io/badge/DIF_Labs_Project-v1-black?style=for-the-badge&labelColor=%23000000&color=%2300ff00)](https://github.com/decentralized-identity/labs/blob/main/proposals/beta-cohort-2-2025/pp-revocation-mechanism/001_proposal.md
+[![DIF Labs Project](https://img.shields.io/badge/DIF_Labs_Project-v1-black?style=for-the-badge&labelColor=%23000000&color=%2300ff00)](https://github.com/decentralized-identity/labs/blob/main/proposals/beta-cohort-2-2025/anon-multi-sig-vc/anon_multi_sig_vc_proposal.md)
 
 A comprehensive implementation of zkMAP (Zero-Knowledge Multi-party Approval Protocol) for verifiable credentials using Semaphore zero-knowledge proofs.
 
