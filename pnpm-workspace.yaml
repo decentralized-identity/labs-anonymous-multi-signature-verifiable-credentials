@@ -1,5 +1,5 @@
 packages:
   - "docs"
   - "packages/*"
-  - "examples/*"
+  - "examples/zkmap-demo/*"
   - "examples/*/apps/*"

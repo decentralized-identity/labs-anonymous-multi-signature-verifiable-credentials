@@ -4,7 +4,9 @@
   "private": true,
   "description": "zkMAP - Zero-Knowledge Multi-party Approval Protocol for Verifiable Credentials",
   "scripts": {
-    "dev:example": "cd examples/zkmap-demo && pnpm dev:all",
+    "dev:example": "pnpm --parallel --filter @zkmap-demo/backend --filter @zkmap-demo/frontend dev",
+    "dev:backend": "pnpm --filter @zkmap-demo/backend dev",
+    "dev:frontend": "pnpm --filter @zkmap-demo/frontend dev",
     "build": "pnpm --recursive build",
     "lint": "pnpm --recursive lint",
     "test": "pnpm --recursive test",
