@@ -1,0 +1,49 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@protected": true,
+    "sem": "https://w3id.org/sem-av#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "evidence": {
+      "@id": "https://www.w3.org/2018/credentials#evidence",
+      "@container": "@set"
+    },
+    "SemaphoreAnonymousVoting": "sem:SemaphoreAnonymousVoting",
+    "proposalId": "sem:proposalId",
+    "groupMerkleRoot": "sem:groupMerkleRoot",
+    "approvalThreshold": {
+      "@id": "sem:approvalThreshold",
+      "@type": "xsd:integer"
+    },
+    "totalMembers": {
+      "@id": "sem:totalMembers",
+      "@type": "xsd:integer"
+    },
+    "approvals": "sem:approvals",
+    "rejections": "sem:rejections",
+    "count": {
+      "@id": "sem:count",
+      "@type": "xsd:integer"
+    },
+    "proofs": {
+      "@id": "sem:proofs",
+      "@container": "@set"
+    },
+    "proof": "sem:proof",
+    "merkleTreeDepth": {
+      "@id": "sem:merkleTreeDepth",
+      "@type": "xsd:integer"
+    },
+    "merkleTreeRoot": "sem:merkleTreeRoot",
+    "nullifier": "sem:nullifier",
+    "nullifierHash": "sem:nullifierHash",
+    "message": "sem:message",
+    "scope": "sem:scope",
+    "externalNullifier": "sem:externalNullifier",
+    "signal": "sem:signal",
+    "points": {
+      "@id": "sem:points",
+      "@container": "@list"
+    }
+  }
+}

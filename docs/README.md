@@ -8,7 +8,7 @@ zkMPA enables organizations to issue W3C Verifiable Credentials based on anonymo
 
 - **Anonymous Voting**: Members vote using Semaphore zero-knowledge proofs
 - **Threshold Approval**: Configurable m-of-n approval requirements
-- **Standard VC Format**: Compatible with W3C Verifiable Credentials
+- **Standard VC Format**: VCDM 2.0 compliant using VC-JWT format (VC-JOSE-COSE)
 - **Verifiable Membership**: All approval proofs validate group membership
 - **Merkle Root History**: Tracks group state changes over time
 
@@ -26,39 +26,75 @@ zkMPA enables organizations to issue W3C Verifiable Credentials based on anonymo
 - VC request is converted to a proposal
 - Members vote anonymously using ZK proofs
 - System verifies proofs and prevents double-voting
-- Upon threshold, VC is issued with [evidence](#vc-evidence-schema)
+- Upon threshold, VC is issued as JWT with [evidence](#vc-format-vcdm-20-vc-jwt)
 
 ### 3. Verification Phase
 Two-stage verification process:
-1. **Signature Check**: Verify issuer's digital signature
-2. **Evidence Check**:
+1. **JWT Signature Check**: Verify the compact JWT signature using the issuer's DID and public key
+2. **Evidence Check** (within the vc claim):
    - Validate approval threshold met
    - Ensure nullifiers are unique
    - Verify merkle root in issuer's history
    - Validate all approval proofs are from group members
 
-## VC Evidence Schema
+## VC Format (VCDM 2.0 VC-JWT)
 
-VCs include cryptographic proof of multi-party approval:
+VCs are issued as compact JWT (JWS) following the VC-JOSE-COSE specification:
 
+### JWT Header
 ```json
-"evidence": [{
-  "type": "SemaphoreAnonymousVoting",
-  "proposalId": "0x...",
-  "groupMerkleRoot": "0x...",
-  "approvalThreshold": 3,
-  "totalMembers": 5,
-  "approvals": {
-    "count": 3,
-    "proofs": [
-      {
-        "proof": { /* Semaphore proof object */ },
-        "nullifierHash": "0x...",
-        "merkleTreeRoot": "0x..."
+{
+  "alg": "ES256K",
+  "kid": "did:ethr:0x123...#keys-1",
+  "typ": "application/vc+jwt"
+}
+```
+
+### JWT Payload
+```json
+{
+  "iss": "did:ethr:0x123...",
+  "sub": "did:example:holder",
+  "nbf": 1758573650,
+  "iat": 1758573650,
+  "exp": 1790109650,
+  "jti": "urn:uuid:...",
+  "vc": {
+    "@context": [
+      "https://www.w3.org/ns/credentials/v2",
+      "https://w3id.org/zkmpa/contexts/v1"
+    ],
+    "type": ["VerifiableCredential"],
+    "credentialSubject": {
+      "id": "did:example:holder",
+      "name": "John Doe",
+      "role": "Developer"
+    },
+    "evidence": [{
+      "type": "SemaphoreAnonymousVoting",
+      "proposalId": "0x...",
+      "groupMerkleRoot": "0x...",
+      "approvalThreshold": 3,
+      "totalMembers": 5,
+      "approvals": {
+        "count": 3,
+        "proofs": [
+          {
+            "proof": { /* Semaphore proof object */ },
+            "nullifierHash": "0x...",
+            "merkleTreeRoot": "0x..."
+          }
+        ]
       }
-    ]
+    }]
   }
-}]
+}
+```
+
+### Final VC Format
+The VC is delivered as a compact JWS string:
+```
+eyJhbGciOiJFUzI1NksiLC....<header>.<payload>.<signature>
 ```
 
 ## Semaphore Group DID Document Structure
@@ -106,8 +142,8 @@ The issuer's DID Document declares ownership of the Semaphore group and maintain
 
 | Check | Description |
 |-------|-------------|
-| `signatureValid` | Verifies issuer's digital signature |
-| `evidenceValid` | Validates evidence structure |
+| `jwtSignatureValid` | Verifies JWT signature using issuer's public key from DID |
+| `evidenceValid` | Validates evidence structure within vc claim |
 | `thresholdMet` | Confirms minimum approvals |
 | `nullifiersUnique` | Ensures no duplicate votes |
 | `merkleRootValid` | Verifies root in issuer's history |
@@ -117,8 +153,25 @@ The issuer's DID Document declares ownership of the Semaphore group and maintain
 
 See the [zkMPA demo](../examples/zkmpa-demo/README.md) for a complete implementation.
 
+## Custom Context for Evidence
+
+The evidence field uses a custom JSON-LD context to provide semantic meaning for the Semaphore anonymous voting properties. The context definition is available at [`v1.jsonld`](./v1.jsonld).
+
+Include the context URL in your VC's `@context` array:
+
+```json
+"@context": [
+  "https://www.w3.org/ns/credentials/v2",
+  "https://w3id.org/zkmpa/contexts/v1"
+]
+```
+
+This ensures semantic interoperability while maintaining compatibility with standard VC processors and enables proper JSON-LD processing of the evidence field.
+
 ## References
 
 - [Semaphore Protocol](https://docs.semaphore.pse.dev/)
+- [W3C VC Data Model 2.0](https://www.w3.org/TR/vc-data-model-2.0/)
+- [W3C VC-JOSE-COSE](https://www.w3.org/TR/vc-jose-cose/)
 - [W3C VC Evidence](https://www.w3.org/TR/vc-data-model-2.0/#evidence)
 - [DID Services](https://www.w3.org/TR/did-1.0/#services)
