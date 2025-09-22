@@ -1,0 +1,49 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@protected": true,
+    "zkmpa": "https://w3id.org/zkmpa#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "evidence": {
+      "@id": "https://www.w3.org/2018/credentials#evidence",
+      "@container": "@set"
+    },
+    "SemaphoreAnonymousVoting": "zkmpa:SemaphoreAnonymousVoting",
+    "proposalId": "zkmpa:proposalId",
+    "groupMerkleRoot": "zkmpa:groupMerkleRoot",
+    "approvalThreshold": {
+      "@id": "zkmpa:approvalThreshold",
+      "@type": "xsd:integer"
+    },
+    "totalMembers": {
+      "@id": "zkmpa:totalMembers",
+      "@type": "xsd:integer"
+    },
+    "approvals": "zkmpa:approvals",
+    "rejections": "zkmpa:rejections",
+    "count": {
+      "@id": "zkmpa:count",
+      "@type": "xsd:integer"
+    },
+    "proofs": {
+      "@id": "zkmpa:proofs",
+      "@container": "@set"
+    },
+    "proof": "zkmpa:proof",
+    "merkleTreeDepth": {
+      "@id": "zkmpa:merkleTreeDepth",
+      "@type": "xsd:integer"
+    },
+    "merkleTreeRoot": "zkmpa:merkleTreeRoot",
+    "nullifier": "zkmpa:nullifier",
+    "nullifierHash": "zkmpa:nullifierHash",
+    "message": "zkmpa:message",
+    "scope": "zkmpa:scope",
+    "externalNullifier": "zkmpa:externalNullifier",
+    "signal": "zkmpa:signal",
+    "points": {
+      "@id": "zkmpa:points",
+      "@container": "@list"
+    }
+  }
+}

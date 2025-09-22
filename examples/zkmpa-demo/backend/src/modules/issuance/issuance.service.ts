@@ -362,12 +362,13 @@ export class IssuanceService {
       }
     }
 
-    // Create VC with evidence using the group DID as issuer
+    // Create VC-JWT with evidence using the group DID as issuer
+    // Veramo will automatically create a proper VC-JWT when proofFormat is "jwt"
     const verifiableCredential = await this.agent.createVerifiableCredential({
       credential: {
         "@context": [
           "https://www.w3.org/2018/credentials/v1",
-          "https://w3id.org/security/suites/secp256k1-2019/v1",
+          "https://w3id.org/zkmpa/contexts/v1",
         ],
         type: ["VerifiableCredential"],
         issuer: { id: proposal.groupDid },
@@ -375,19 +376,24 @@ export class IssuanceService {
         credentialSubject: proposal.vcClaims.credentialSubject,
         evidence: [evidence],
       },
-      proofFormat: "jwt",
+      proofFormat: "jwt",  // This ensures Veramo creates a compact JWT
     });
 
-    // Store issued VC
+    // Extract the JWT string from the verifiable credential
+    // When proofFormat is "jwt", Veramo returns an object with proof.jwt
+    const vcJwt = verifiableCredential.proof?.jwt || verifiableCredential;
+
+    // Store issued VC (store the JWT string)
     await this.issuedVCModel.create({
       proposalId,
-      vc: verifiableCredential,
+      vc: vcJwt,
       issuedAt: new Date(),
       issuerDid: proposal.groupDid,
       evidence,
     });
 
-    return verifiableCredential;
+    // Return only the JWT string for VCDM compliance
+    return vcJwt;
   }
 
   // Get proposal details

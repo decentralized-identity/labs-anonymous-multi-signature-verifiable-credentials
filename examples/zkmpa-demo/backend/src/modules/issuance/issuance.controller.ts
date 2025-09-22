@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body, Query, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Get, Body, Query, Param, HttpException, HttpStatus } from '@nestjs/common';
 import { initializeAgent } from '../../lib/veramo/agent';
 import { IssuanceService } from './issuance.service';
 import { GroupDIDService } from '../group/group-did.service';
@@ -6,13 +6,13 @@ import { Identity } from '@semaphore-protocol/identity';
 import { Group } from '@semaphore-protocol/group';
 import { generateProof } from '@semaphore-protocol/proof';
 
-@Controller('issuance')
+@Controller('api')
 export class IssuanceController {
   constructor(
     private readonly issuanceService: IssuanceService,
     private readonly groupDIDService: GroupDIDService
   ) {}
-  @Post('create-proposal')
+  @Post('proposals')
   async createProposal(@Body() body: {
     vcClaims: any;
     groupDid: string;
@@ -42,8 +42,8 @@ export class IssuanceController {
     }
   }
 
-  @Get('get-proposal')
-  async getProposal(@Query('proposalId') proposalId: string) {
+  @Get('proposals/:proposalId')
+  async getProposal(@Param('proposalId') proposalId: string) {
     try {
       if (!proposalId) {
         throw new HttpException(
@@ -83,25 +83,20 @@ export class IssuanceController {
     }
   }
 
-  @Post('issue-vc')
-  async issueVC(@Body() body: { proposalId: string }) {
+  @Post('proposals/:proposalId/issue')
+  async issueVC(@Param('proposalId') proposalId: string) {
     try {
-      const { proposalId } = body;
 
       const agent = await initializeAgent();
       await this.issuanceService.initialize(agent);
 
-      const vc = await this.issuanceService.issueVCWithEvidence(proposalId);
-
-      // Extract JWT from the VC proof
-      const jwt = vc.proof?.jwt || '';
+      // The service now returns the JWT string directly
+      const vcJwt = await this.issuanceService.issueVCWithEvidence(proposalId);
 
       return {
         success: true,
         data: {
-          credential: jwt,
-          verifiableCredential: vc,
-          evidence: vc.evidence,
+          credential: vcJwt  // Only return the JWT string
         },
       };
     } catch (error) {
@@ -116,16 +111,18 @@ export class IssuanceController {
     }
   }
 
-  @Post('vote')
-  async vote(@Body() body: {
-    proposalId: string;
-    memberSecret: string;
-    voteType: 'approve' | 'reject';
-    groupDid: string;
-  }) {
+  @Post('proposals/:proposalId/votes')
+  async vote(
+    @Param('proposalId') proposalId: string,
+    @Body() body: {
+      memberSecret: string;
+      voteType: 'approve' | 'reject';
+      groupDid: string;
+    }
+  ) {
     console.log('=== Vote API Called ===');
     try {
-      const { proposalId, memberSecret, voteType, groupDid } = body;
+      const { memberSecret, voteType, groupDid } = body;
       console.log('Request body:', body);
       
       console.log('Initializing agent...');
@@ -219,8 +216,11 @@ export class IssuanceController {
     }
   }
 
-  @Post('vote2')
-  async vote2(@Body() body: any) {
+  @Post('proposals/:proposalId/test-vote')
+  async testVote(
+    @Param('proposalId') proposalId: string,
+    @Body() body: any
+  ) {
     console.log("=== Vote API Called ===");
     try {
       const identity = new Identity();
