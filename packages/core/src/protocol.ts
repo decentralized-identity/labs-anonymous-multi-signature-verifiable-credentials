@@ -123,7 +123,8 @@ export class zkMAPProtocol {
       await this.proposalManager.submitVote(proposal.id, {
         proof,
         voteType: vote.voteType,
-        nullifierHash: proof.nullifier
+        nullifierHash: proof.nullifier,
+        merkleTreeRoot: proof.merkleTreeRoot || group.getMerkleRoot()
       })
     }
 

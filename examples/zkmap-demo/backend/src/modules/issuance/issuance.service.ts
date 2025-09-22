@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Identity } from "@semaphore-protocol/identity";
-import { verifyProof, generateProof } from "@semaphore-protocol/proof";
+import { generateProof } from "@semaphore-protocol/proof";
 import { Group } from "@semaphore-protocol/group";
 import { Agent } from "../../lib/veramo/agent";
 import { randomBytes, createHash } from "crypto";
@@ -12,6 +12,7 @@ import { Proposal, ProposalDocument } from './proposal.schema';
 import { IssuedVC, IssuedVCDocument } from './issued-vc.schema';
 import { Group as GroupSchema, GroupDocument, GroupConfig, GroupConfigDocument } from '../group/group.schema';
 import { MerkleRootHistory, MerkleRootHistoryDocument } from '../group/merkle-root-history.schema';
+import { VoteProof, Proposal as VoteProposal } from '../../types/vote.types';
 
 export interface VCClaims {
   subject: string;
@@ -20,14 +21,6 @@ export interface VCClaims {
     [key: string]: any;
   };
   [key: string]: any;
-}
-
-export interface VoteProof {
-  proof: any;
-  nullifierHash: string;
-  externalNullifier: string;
-  signal: string;
-  merkleTreeRoot: string;
 }
 
 export interface IssuanceProposal {
@@ -339,11 +332,11 @@ export class IssuanceService {
       totalMembers: proposal.totalMembers,
       approvals: {
         count: proposal.approvals.length,
-        nullifiers: proposal.approvals.map((a: VoteProof) => a.nullifierHash),
+        proofs: proposal.approvals
       },
       rejections: {
         count: proposal.rejections.length,
-        nullifiers: proposal.rejections.map((r: VoteProof) => r.nullifierHash),
+        proofs: proposal.rejections
       },
     };
 

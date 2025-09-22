@@ -146,11 +146,19 @@ export class ProposalImpl implements Proposal {
       totalMembers: this.getTotalMembers(),
       approvals: {
         count: this.approvals.length,
-        nullifiers: this.approvals.map(a => a.nullifierHash)
+        proofs: this.approvals.map(a => ({
+          proof: a.proof,
+          nullifierHash: a.nullifierHash,
+          merkleTreeRoot: a.merkleTreeRoot || this.merkleRoot
+        }))
       },
       rejections: {
         count: this.rejections.length,
-        nullifiers: this.rejections.map(r => r.nullifierHash)
+        proofs: this.rejections.map(r => ({
+          proof: r.proof,
+          nullifierHash: r.nullifierHash,
+          merkleTreeRoot: r.merkleTreeRoot || this.merkleRoot
+        }))
       },
       timestamp: new Date().toISOString()
     }

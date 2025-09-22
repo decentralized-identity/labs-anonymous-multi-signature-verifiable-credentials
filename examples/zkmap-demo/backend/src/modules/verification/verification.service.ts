@@ -6,24 +6,7 @@ import { MerkleRootVerifier } from './merkle-root-verifier'
 import { GroupDIDService } from '../group/group-did.service'
 import { Group, GroupDocument } from '../group/group.schema'
 import { MerkleRootHistory, MerkleRootHistoryDocument } from '../group/merkle-root-history.schema'
-
-export interface VerificationResult {
-  valid: boolean
-  checks: {
-    signatureValid: boolean
-    evidenceValid: boolean
-    thresholdMet: boolean
-    nullifiersUnique: boolean
-    merkleRootValid: boolean
-  }
-  details?: {
-    issuer?: string
-    approvalCount?: number
-    approvalThreshold?: number
-    merkleRootSource?: string
-    errors?: string[]
-  }
-}
+import { VoteProof, VerificationResult, EvidenceResult } from '../../types/vote.types'
 
 @Injectable()
 export class VerificationService {
@@ -59,11 +42,10 @@ export class VerificationService {
         evidenceValid: false,
         thresholdMet: false,
         nullifiersUnique: false,
-        merkleRootValid: false
+        merkleRootValid: false,
+        approvalProofsValid: false
       },
-      details: {
-        errors
-      }
+      details: { errors }
     }
 
     try {
@@ -82,15 +64,25 @@ export class VerificationService {
       // Stage 2: Anonymous Approval Verification (Evidence Check)
       const evidenceResult = await this.verifyEvidence(verifiableCredential)
 
-      result.checks.evidenceValid = evidenceResult.evidenceValid
-      result.checks.thresholdMet = evidenceResult.thresholdMet
-      result.checks.nullifiersUnique = evidenceResult.nullifiersUnique
-      result.checks.merkleRootValid = evidenceResult.merkleRootValid
+      // Map evidence results to verification checks
+      result.checks = {
+        ...result.checks,
+        evidenceValid: evidenceResult.evidenceValid,
+        thresholdMet: evidenceResult.thresholdMet,
+        nullifiersUnique: evidenceResult.nullifiersUnique,
+        merkleRootValid: evidenceResult.merkleRootValid,
+        approvalProofsValid: evidenceResult.approvalProofsValid
+      }
 
-      result.details!.approvalCount = evidenceResult.approvalCount
-      result.details!.approvalThreshold = evidenceResult.approvalThreshold
-      result.details!.merkleRootSource = evidenceResult.merkleRootSource
+      // Map evidence details
+      result.details = {
+        ...result.details,
+        approvalCount: evidenceResult.approvalCount,
+        approvalThreshold: evidenceResult.approvalThreshold,
+        merkleRootSource: evidenceResult.merkleRootSource
+      }
 
+      // Consolidate errors
       if (evidenceResult.errors.length > 0) {
         errors.push(...evidenceResult.errors)
       }
@@ -147,25 +139,17 @@ export class VerificationService {
   /**
    * Stage 2: Verify anonymous approval evidence
    */
-  private async verifyEvidence(verifiableCredential: any): Promise<{
-    evidenceValid: boolean
-    thresholdMet: boolean
-    nullifiersUnique: boolean
-    merkleRootValid: boolean
-    approvalCount?: number
-    approvalThreshold?: number
-    merkleRootSource?: string
-    errors: string[]
-  }> {
+  private async verifyEvidence(verifiableCredential: any): Promise<EvidenceResult> {
     const errors: string[] = []
-    const result = {
+    const result: EvidenceResult = {
       evidenceValid: false,
       thresholdMet: false,
       nullifiersUnique: false,
       merkleRootValid: false,
+      approvalProofsValid: false,
       approvalCount: 0,
       approvalThreshold: 0,
-      merkleRootSource: undefined as string | undefined,
+      merkleRootSource: undefined,
       errors
     }
 
@@ -202,7 +186,8 @@ export class VerificationService {
       }
 
       // Check nullifiers uniqueness
-      const nullifiers = semaphoreEvidence.approvals?.nullifiers || []
+      const approvalProofs: VoteProof[] = semaphoreEvidence.approvals?.proofs || []
+      const nullifiers = approvalProofs.map((p: VoteProof) => p.nullifierHash).filter(Boolean)
       const uniqueNullifiers = new Set(nullifiers)
       result.nullifiersUnique = nullifiers.length === uniqueNullifiers.size
 
@@ -235,6 +220,47 @@ export class VerificationService {
 
       if (!result.merkleRootValid) {
         errors.push(`Merkle root ${groupMerkleRoot} not found in issuer's history`)
+      }
+
+      // Verify that all approval proofs are valid members of the group
+      if (approvalProofs.length > 0) {
+        result.approvalProofsValid = true
+
+        for (const proofData of approvalProofs) {
+          if (!proofData.proof || !proofData.merkleTreeRoot) {
+            result.approvalProofsValid = false
+            errors.push(`Missing proof data for nullifier ${proofData.nullifierHash}`)
+            continue
+          }
+
+          // Verify that the proof's merkle root matches the group merkle root
+          if (proofData.merkleTreeRoot !== groupMerkleRoot) {
+            result.approvalProofsValid = false
+            errors.push(`Merkle root mismatch for nullifier ${proofData.nullifierHash}`)
+            continue
+          }
+
+          // Verify the Semaphore proof itself
+          try {
+            const verificationResult = await this.merkleRootVerifier.verifyProofWithRoot(
+              issuerDid,
+              proofData.proof,
+              proofData.merkleTreeRoot,
+              30 * 24 * 60 * 60 * 1000 // Max root age: 30 days
+            )
+
+            if (!verificationResult.valid) {
+              result.approvalProofsValid = false
+              errors.push(`Invalid proof for nullifier ${proofData.nullifierHash}: ${verificationResult.message}`)
+            }
+          } catch (error) {
+            result.approvalProofsValid = false
+            errors.push(`Failed to verify proof for nullifier ${proofData.nullifierHash}: ${error instanceof Error ? error.message : 'Unknown error'}`)
+          }
+        }
+      } else {
+        // If no proofs are included, we can't verify membership
+        errors.push('No proofs included in evidence for verification')
       }
 
       return result

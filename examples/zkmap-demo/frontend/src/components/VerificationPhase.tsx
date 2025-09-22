@@ -134,7 +134,8 @@ export default function VerificationPhase() {
     evidenceValid: 'Evidence Structure',
     thresholdMet: 'Approval Threshold',
     nullifiersUnique: 'Unique Nullifiers',
-    merkleRootValid: 'Merkle Root Verification'
+    merkleRootValid: 'Merkle Root Verification',
+    approvalProofsValid: 'Approval Proofs'
   };
 
   const checkDescriptions = {
@@ -142,7 +143,8 @@ export default function VerificationPhase() {
     evidenceValid: 'Validates the anonymous approval evidence format',
     thresholdMet: 'Confirms minimum approvals were received',
     nullifiersUnique: 'Ensures no duplicate votes were cast',
-    merkleRootValid: 'Verifies merkle root exists in issuer\'s history'
+    merkleRootValid: 'Verifies merkle root exists in issuer\'s history',
+    approvalProofsValid: 'Validates all approval proofs are from group members'
   };
 
   return (

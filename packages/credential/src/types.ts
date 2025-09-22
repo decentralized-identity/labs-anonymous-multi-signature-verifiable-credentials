@@ -18,6 +18,12 @@ export interface VerifiableCredential {
   [key: string]: any
 }
 
+export interface ProofData {
+  proof: any
+  nullifierHash: string
+  merkleTreeRoot: string
+}
+
 export interface ApprovalEvidence {
   type: 'SemaphoreAnonymousVoting'
   proposalId: string
@@ -26,11 +32,11 @@ export interface ApprovalEvidence {
   totalMembers?: number
   approvals: {
     count: number
-    nullifiers: string[]
+    proofs: ProofData[]
   }
   rejections?: {
     count: number
-    nullifiers: string[]
+    proofs: ProofData[]
   }
   timestamp?: string
 }
@@ -48,6 +54,7 @@ export interface EvidenceVerification {
     thresholdMet: boolean
     nullifiersUnique: boolean
     merkleRootValid: boolean
+    approvalProofsValid: boolean
   }
   details?: {
     approvalCount?: number
@@ -65,6 +72,7 @@ export interface VerificationResult {
     thresholdMet: boolean
     nullifiersUnique: boolean
     merkleRootValid: boolean
+    approvalProofsValid: boolean
   }
   details?: {
     issuer?: string

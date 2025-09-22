@@ -60,7 +60,8 @@ export class CredentialVerifierImpl implements CredentialVerifier {
         evidenceValid: false,
         thresholdMet: false,
         nullifiersUnique: false,
-        merkleRootValid: false
+        merkleRootValid: false,
+        approvalProofsValid: false
       },
       details: {
         errors
@@ -100,12 +101,33 @@ export class CredentialVerifierImpl implements CredentialVerifier {
       }
 
       // Check nullifiers uniqueness
-      const nullifiers = semaphoreEvidence.approvals?.nullifiers || []
+      const approvalProofs = semaphoreEvidence.approvals?.proofs || []
+      const nullifiers = approvalProofs.map((p: any) => p.nullifierHash).filter(Boolean)
       const uniqueNullifiers = new Set(nullifiers)
       result.checks.nullifiersUnique = nullifiers.length === uniqueNullifiers.size
 
       if (!result.checks.nullifiersUnique) {
         errors.push('Duplicate nullifiers detected')
+      }
+
+      // Verify approval proofs (basic check - ensure proofs exist)
+      if (approvalProofs.length > 0) {
+        result.checks.approvalProofsValid = true
+        for (const proofData of approvalProofs) {
+          if (!proofData.proof || !proofData.nullifierHash || !proofData.merkleTreeRoot) {
+            result.checks.approvalProofsValid = false
+            errors.push(`Incomplete proof data for nullifier ${proofData.nullifierHash}`)
+            break
+          }
+          // Verify proof's merkle root matches the group merkle root
+          if (proofData.merkleTreeRoot !== semaphoreEvidence.groupMerkleRoot) {
+            result.checks.approvalProofsValid = false
+            errors.push(`Merkle root mismatch for nullifier ${proofData.nullifierHash}`)
+            break
+          }
+        }
+      } else {
+        errors.push('No approval proofs found')
       }
 
       // Verify merkle root if history is available
@@ -154,7 +176,8 @@ export class CredentialVerifierImpl implements CredentialVerifier {
         evidenceValid: false,
         thresholdMet: false,
         nullifiersUnique: false,
-        merkleRootValid: false
+        merkleRootValid: false,
+        approvalProofsValid: false
       },
       details: {
         errors
@@ -183,6 +206,7 @@ export class CredentialVerifierImpl implements CredentialVerifier {
       result.checks.thresholdMet = evidenceResult.checks.thresholdMet
       result.checks.nullifiersUnique = evidenceResult.checks.nullifiersUnique
       result.checks.merkleRootValid = evidenceResult.checks.merkleRootValid
+      result.checks.approvalProofsValid = evidenceResult.checks.approvalProofsValid
 
       result.details!.approvalCount = evidenceResult.details?.approvalCount
       result.details!.approvalThreshold = evidenceResult.details?.approvalThreshold

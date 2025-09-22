@@ -86,7 +86,8 @@ async function example() {
   await protocol.proposalManager.submitVote(proposal.id, {
     proof: aliceProof,
     voteType: 'approve',
-    nullifierHash: aliceProof.nullifier
+    nullifierHash: aliceProof.nullifier,
+    merkleTreeRoot: aliceProof.merkleTreeRoot || group.getMerkleRoot()
   })
   console.log('   ✓ Alice voted (anonymously)')
 
@@ -103,7 +104,8 @@ async function example() {
   await protocol.proposalManager.submitVote(proposal.id, {
     proof: bobProof,
     voteType: 'approve',
-    nullifierHash: bobProof.nullifier
+    nullifierHash: bobProof.nullifier,
+    merkleTreeRoot: bobProof.merkleTreeRoot || group.getMerkleRoot()
   })
   console.log('   ✓ Bob voted (anonymously)')
 
@@ -125,7 +127,7 @@ async function example() {
     console.log(`   Issuer: ${vc.issuer}`)
     console.log(`   Evidence type: ${vc.evidence?.[0]?.type}`)
     console.log(`   Approval count: ${evidence.approvals.count}`)
-    console.log(`   Nullifiers: ${evidence.approvals.nullifiers.length} unique votes`)
+    console.log(`   Proofs: ${evidence.approvals.proofs.length} approval proofs`)
 
     // 8. Verify the credential
     console.log('\n🔍 Verifying credential...')
