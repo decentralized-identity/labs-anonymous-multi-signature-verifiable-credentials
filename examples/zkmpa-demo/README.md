@@ -1,11 +1,11 @@
-# zkMAP Demo
+# zkMPA Demo
 
-This demo implements the zkMAP (Zero-Knowledge Multi-party Approval Protocol) for Verifiable Credentials. It demonstrates creating a DID for a Semaphore group (not individual members) and publishing the group information in the DID Document.
+This demo implements the zkMPA (Zero-Knowledge Multi-Party Approval) for Verifiable Credentials. It demonstrates creating a DID for a Semaphore group (not individual members) and publishing the group information in the DID Document.
 
 ## Project Structure
 
 ```
-zkmap-demo/
+zkmpa-demo/
 ├── backend/           # NestJS backend application (port 3001)
 ├── frontend/          # Next.js frontend application (port 3000)
 └── README.md          # Project documentation
@@ -35,7 +35,7 @@ Backend environment variables (`backend/.env`):
 ```env
 INFURA_PROJECT_ID=your_infura_project_id_here
 KMS_SECRET_KEY=your-secret-key-at-least-32-chars-long1234567890
-MONGODB_URI=mongodb://localhost:27017/zkmap-demo
+MONGODB_URI=mongodb://localhost:27017/zkmpa-demo
 ```
 
 Frontend environment variables (`frontend/.env.local`):
@@ -59,10 +59,10 @@ pnpm dev:example
 
 ```bash
 # Run backend only
-pnpm --filter @zkmap-demo/backend dev
+pnpm --filter @zkmpa-demo/backend dev
 
 # Run frontend only
-pnpm --filter @zkmap-demo/frontend dev
+pnpm --filter @zkmpa-demo/frontend dev
 ```
 
 ## Build
@@ -77,10 +77,10 @@ pnpm build
 
 ```bash
 # Build backend
-pnpm --filter @zkmap-demo/backend build
+pnpm --filter @zkmpa-demo/backend build
 
 # Build frontend
-pnpm --filter @zkmap-demo/frontend build
+pnpm --filter @zkmpa-demo/frontend build
 ```
 
 ## API Endpoints

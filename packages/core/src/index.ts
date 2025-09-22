@@ -6,7 +6,7 @@ export {
   type IdentityManager as IIdentityManager,
   type Identity as IIdentity,
   type SerializedIdentity as ISerializedIdentity
-} from '@zkmap/identity'
+} from '@zkmpa/identity'
 
 // Group Management
 export {
@@ -20,7 +20,7 @@ export {
   type Group as IGroup,
   type GroupManager as IGroupManager,
   type MerkleRootHistory as IMerkleRootHistory
-} from '@zkmap/group'
+} from '@zkmpa/group'
 
 // Proposal and Voting
 export {
@@ -35,7 +35,7 @@ export {
   type SerializedProposal,
   type Proposal as IProposal,
   type ProposalManager as IProposalManager
-} from '@zkmap/proposal'
+} from '@zkmpa/proposal'
 
 // Credential Management
 export {
@@ -49,7 +49,7 @@ export {
   type CredentialAgent,
   type CredentialIssuer as ICredentialIssuer,
   type CredentialVerifier as ICredentialVerifier
-} from '@zkmap/credential'
+} from '@zkmpa/credential'
 
 // Zero-Knowledge Proofs
 export {
@@ -64,7 +64,7 @@ export {
   type VerificationResult as ProofVerificationResult,
   type ProofGenerator as IProofGenerator,
   type ProofVerifier as IProofVerifier
-} from '@zkmap/proof'
+} from '@zkmpa/proof'
 
 // Storage
 export {
@@ -77,7 +77,7 @@ export {
   type VCFilter,
   type IssuedVC,
   type StorageFactory as IStorageFactory
-} from '@zkmap/storage'
+} from '@zkmpa/storage'
 
 // Main Protocol
-export { zkMAPProtocol, zkMAPProtocol as AnonymousApprovalProtocol } from './protocol'
+export { zkMPAProtocol, zkMPAProtocol as AnonymousApprovalProtocol } from './protocol'

@@ -1,7 +1,7 @@
 {
-  "name": "@zkmap/core",
+  "name": "@zkmpa/core",
   "version": "0.0.1",
-  "description": "Core package for zkMAP (Zero-Knowledge Multi-party Approval Protocol)",
+  "description": "Core package for zkMPA (Zero-Knowledge Multi-Party Approval)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -10,12 +10,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "@zkmap/identity": "workspace:*",
-    "@zkmap/group": "workspace:*",
-    "@zkmap/proposal": "workspace:*",
-    "@zkmap/credential": "workspace:*",
-    "@zkmap/proof": "workspace:*",
-    "@zkmap/storage": "workspace:*"
+    "@zkmpa/identity": "workspace:*",
+    "@zkmpa/group": "workspace:*",
+    "@zkmpa/proposal": "workspace:*",
+    "@zkmpa/credential": "workspace:*",
+    "@zkmpa/proof": "workspace:*",
+    "@zkmpa/storage": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

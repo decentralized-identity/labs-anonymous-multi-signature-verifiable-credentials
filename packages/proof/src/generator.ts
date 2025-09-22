@@ -1,7 +1,7 @@
 import { generateProof } from '@semaphore-protocol/proof'
 import { ProofGenerator, ZKProof, ProofParams, VoteProofParams } from './types'
-import { IdentityImpl } from '@zkmap/identity'
-import { GroupImpl } from '@zkmap/group'
+import { IdentityImpl } from '@zkmpa/identity'
+import { GroupImpl } from '@zkmpa/group'
 import { createHash } from 'crypto'
 
 export class ProofGeneratorImpl implements ProofGenerator {

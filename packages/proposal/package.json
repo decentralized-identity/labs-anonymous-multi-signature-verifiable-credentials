@@ -1,7 +1,7 @@
 {
-  "name": "@zkmap/proposal",
+  "name": "@zkmpa/proposal",
   "version": "0.0.1",
-  "description": "Proposal and voting management for zkMAP (Zero-Knowledge Multi-party Approval Protocol)",
+  "description": "Proposal and voting management for zkMPA (Zero-Knowledge Multi-Party Approval)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -10,9 +10,9 @@
     "test": "jest"
   },
   "dependencies": {
-    "@zkmap/group": "workspace:*",
-    "@zkmap/proof": "workspace:*",
-    "@zkmap/storage": "workspace:*"
+    "@zkmpa/group": "workspace:*",
+    "@zkmpa/proof": "workspace:*",
+    "@zkmpa/storage": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

@@ -1,4 +1,4 @@
-import { GroupState, RootRecord } from '@zkmap/group'
+import { GroupState, RootRecord } from '@zkmpa/group'
 
 // Avoid circular dependency - define interface here instead of importing
 export interface Proposal {

@@ -1,7 +1,7 @@
 {
-  "name": "@zkmap/group",
+  "name": "@zkmpa/group",
   "version": "0.0.1",
-  "description": "Group management for zkMAP (Zero-Knowledge Multi-party Approval Protocol)",
+  "description": "Group management for zkMPA (Zero-Knowledge Multi-Party Approval)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

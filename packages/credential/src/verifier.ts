@@ -7,7 +7,7 @@ import {
   CredentialAgent,
   ApprovalEvidence
 } from './types'
-import { MerkleRootHistory } from '@zkmap/group'
+import { MerkleRootHistory } from '@zkmpa/group'
 
 export class CredentialVerifierImpl implements CredentialVerifier {
   private agent?: CredentialAgent

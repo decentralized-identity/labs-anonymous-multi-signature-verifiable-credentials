@@ -1,6 +1,6 @@
-# @zkmap/core
+# @zkmpa/core
 
-Core implementation of zkMAP (Zero-Knowledge Multi-party Approval Protocol), providing privacy-preserving multi-party credential issuance using zero-knowledge proofs.
+Core implementation of zkMPA (Zero-Knowledge Multi-Party Approval), providing privacy-preserving multi-party credential issuance using zero-knowledge proofs.
 
 ## Features
 
@@ -13,7 +13,7 @@ Core implementation of zkMAP (Zero-Knowledge Multi-party Approval Protocol), pro
 ## Installation
 
 ```bash
-npm install @zkmap/core
+npm install @zkmpa/core
 ```
 
 ## Quick Start
@@ -25,7 +25,7 @@ import {
   ProposalManager,
   CredentialIssuer,
   StorageFactory
-} from '@zkmap/core'
+} from '@zkmpa/core'
 
 // Initialize components
 const storage = StorageFactory.createMemoryAdapter()
@@ -78,12 +78,12 @@ const vc = await credentialIssuer.issueWithEvidence(
 
 ### Core Packages
 
-- **@zkmap/identity**: Identity creation and management
-- **@zkmap/group**: Group membership and Merkle tree management
-- **@zkmap/proposal**: Proposal creation and voting logic
-- **@zkmap/credential**: VC issuance and verification
-- **@zkmap/proof**: ZK proof generation and verification
-- **@zkmap/storage**: Pluggable storage adapters
+- **@zkmpa/identity**: Identity creation and management
+- **@zkmpa/group**: Group membership and Merkle tree management
+- **@zkmpa/proposal**: Proposal creation and voting logic
+- **@zkmpa/credential**: VC issuance and verification
+- **@zkmpa/proof**: ZK proof generation and verification
+- **@zkmpa/storage**: Pluggable storage adapters
 
 ## Architecture
 
@@ -91,7 +91,7 @@ const vc = await credentialIssuer.issueWithEvidence(
 ┌─────────────────────────────────────────────────────────────┐
 │                      Application Layer                       │
 ├─────────────────────────────────────────────────────────────┤
-│                        @zkmap/core                           │
+│                        @zkmpa/core                           │
 ├──────────────┬────────────┬──────────────┬─────────────────┤
 │   Identity   │   Group    │   Proposal   │   Credential    │
 ├──────────────┴────────────┴──────────────┴─────────────────┤

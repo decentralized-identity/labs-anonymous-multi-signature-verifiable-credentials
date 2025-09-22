@@ -1,5 +1,5 @@
 import { StorageAdapter, ProposalFilter, VCFilter, IssuedVC, Proposal } from './types'
-import { GroupState, RootRecord } from '@zkmap/group'
+import { GroupState, RootRecord } from '@zkmpa/group'
 
 export class InMemoryStorageAdapter implements StorageAdapter {
   private proposals: Map<string, Proposal> = new Map()

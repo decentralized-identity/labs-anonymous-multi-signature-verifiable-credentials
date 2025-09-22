@@ -1,7 +1,7 @@
 {
-  "name": "@zkmap/proof",
+  "name": "@zkmpa/proof",
   "version": "0.0.1",
-  "description": "Zero-knowledge proof generation and verification for zkMAP (Zero-Knowledge Multi-party Approval Protocol)",
+  "description": "Zero-knowledge proof generation and verification for zkMPA (Zero-Knowledge Multi-Party Approval)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -10,8 +10,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "@zkmap/identity": "workspace:*",
-    "@zkmap/group": "workspace:*",
+    "@zkmpa/identity": "workspace:*",
+    "@zkmpa/group": "workspace:*",
     "@semaphore-protocol/proof": "^4.0.0"
   },
   "devDependencies": {

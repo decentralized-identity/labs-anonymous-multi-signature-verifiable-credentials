@@ -1,7 +1,7 @@
 import { ProposalManager, Proposal, ProposalParams, Vote, ProposalStatus, ProposalResult, ProposalFilter } from './types'
 import { ProposalImpl } from './proposal'
-import { GroupManager } from '@zkmap/group'
-import { StorageAdapter } from '@zkmap/storage'
+import { GroupManager } from '@zkmpa/group'
+import { StorageAdapter } from '@zkmpa/storage'
 
 export class ProposalManagerImpl implements ProposalManager {
   private proposals: Map<string, ProposalImpl> = new Map()

@@ -1,5 +1,5 @@
 import { StorageAdapter, ProposalFilter, VCFilter, IssuedVC, Proposal } from './types'
-import { GroupState, RootRecord } from '@zkmap/group'
+import { GroupState, RootRecord } from '@zkmpa/group'
 import * as fs from 'fs/promises'
 import * as path from 'path'
 

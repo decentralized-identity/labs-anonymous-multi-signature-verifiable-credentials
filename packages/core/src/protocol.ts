@@ -11,10 +11,10 @@ import {
 } from './index'
 
 /**
- * zkMAP Protocol orchestrator that coordinates all components
+ * zkMPA Protocol orchestrator that coordinates all components
  * Zero-Knowledge Multi-party Approval Protocol
  */
-export class zkMAPProtocol {
+export class zkMPAProtocol {
   public readonly identityManager: IdentityManager
   public readonly groupManager: GroupManager
   public readonly proposalManager: ProposalManager

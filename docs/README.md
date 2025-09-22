@@ -1,8 +1,8 @@
-# zkMAP - Zero-Knowledge Multi-party Approval Protocol
+# zkMPA - Zero-Knowledge Multi-Party Approval for Verifiable Credentials
 
 ## Overview
 
-zkMAP enables organizations to issue W3C Verifiable Credentials based on anonymous multi-party approval. Members vote on credential issuance without revealing their identities using Semaphore zero-knowledge proofs.
+zkMPA enables organizations to issue W3C Verifiable Credentials based on anonymous multi-party approval. Members vote on credential issuance without revealing their identities using Semaphore zero-knowledge proofs.
 
 ## Key Features
 
@@ -115,7 +115,7 @@ The issuer's DID Document declares ownership of the Semaphore group and maintain
 
 ## Implementation
 
-See the [zkMAP demo](../examples/zkmap-demo/README.md) for a complete implementation.
+See the [zkMPA demo](../examples/zkmpa-demo/README.md) for a complete implementation.
 
 ## References
 

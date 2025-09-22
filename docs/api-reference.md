@@ -1,13 +1,13 @@
-# zkMAP API Reference
+# zkMPA API Reference
 
 ## Core Packages
 
-### @zkmap/identity
+### @zkmpa/identity
 
-Identity management for zkMAP protocol.
+Identity management for zkMPA protocol.
 
 ```typescript
-import { IdentityManager } from '@zkmap/identity'
+import { IdentityManager } from '@zkmpa/identity'
 
 const manager = new IdentityManager()
 const identity = manager.createIdentity()
@@ -20,12 +20,12 @@ const identity = manager.createIdentity()
 - `importIdentity(data: SerializedIdentity): Identity`
 - `deriveCommitment(identity: Identity): bigint`
 
-### @zkmap/group
+### @zkmpa/group
 
 Group and membership management.
 
 ```typescript
-import { GroupManager } from '@zkmap/group'
+import { GroupManager } from '@zkmpa/group'
 
 const manager = new GroupManager()
 const group = manager.createGroup({
@@ -43,12 +43,12 @@ const group = manager.createGroup({
 - `getMerkleRoot(groupId: string): bigint`
 - `getMerkleProof(groupId: string, commitment: bigint): MerkleProof`
 
-### @zkmap/proposal
+### @zkmpa/proposal
 
 Proposal and voting management.
 
 ```typescript
-import { ProposalManager } from '@zkmap/proposal'
+import { ProposalManager } from '@zkmpa/proposal'
 
 const manager = new ProposalManager(groupManager, storage)
 const proposal = await manager.createProposal({
@@ -65,12 +65,12 @@ const proposal = await manager.createProposal({
 - `getProposalStatus(proposalId: string): Promise<ProposalStatus>`
 - `finalizeProposal(proposalId: string): Promise<ProposalResult>`
 
-### @zkmap/credential
+### @zkmpa/credential
 
 VC issuance and verification.
 
 ```typescript
-import { CredentialIssuer, CredentialVerifier } from '@zkmap/credential'
+import { CredentialIssuer, CredentialVerifier } from '@zkmpa/credential'
 
 const issuer = new CredentialIssuer(agent)
 const vc = await issuer.issueWithEvidence(
@@ -94,12 +94,12 @@ const result = await verifier.verifyComplete(vcJwt)
 - `verifyEvidence(vc: VerifiableCredential): Promise<EvidenceVerification>`
 - `verifyComplete(vc: string): Promise<VerificationResult>`
 
-### @zkmap/proof
+### @zkmpa/proof
 
 Zero-knowledge proof generation and verification.
 
 ```typescript
-import { ProofGenerator, ProofVerifier } from '@zkmap/proof'
+import { ProofGenerator, ProofVerifier } from '@zkmpa/proof'
 
 const generator = new ProofGenerator()
 const proof = await generator.generateVoteProof({
@@ -123,12 +123,12 @@ const isValid = await verifier.verifyVoteProof(proof, voteInputs)
 - `verifyMembershipProof(proof: ZKProof, publicInputs: PublicInputs): Promise<boolean>`
 - `verifyVoteProof(proof: ZKProof, voteInputs: VoteInputs): Promise<boolean>`
 
-### @zkmap/storage
+### @zkmpa/storage
 
 Storage adapters for persistence.
 
 ```typescript
-import { StorageFactory } from '@zkmap/storage'
+import { StorageFactory } from '@zkmpa/storage'
 
 // In-memory storage
 const memoryStorage = StorageFactory.createMemoryAdapter()
@@ -137,7 +137,7 @@ const memoryStorage = StorageFactory.createMemoryAdapter()
 const fileStorage = StorageFactory.createFileAdapter('./data')
 
 // Use with protocol
-const protocol = new zkMAPProtocol(memoryStorage)
+const protocol = new zkMPAProtocol(memoryStorage)
 ```
 
 #### Storage Methods
@@ -148,14 +148,14 @@ const protocol = new zkMAPProtocol(memoryStorage)
 - `getGroupState(id: string): Promise<GroupState | null>`
 - `saveMerkleRootHistory(record: RootRecord): Promise<void>`
 
-### @zkmap/core
+### @zkmpa/core
 
 Main protocol orchestrator.
 
 ```typescript
-import { zkMAPProtocol } from '@zkmap/core'
+import { zkMPAProtocol } from '@zkmpa/core'
 
-const protocol = new zkMAPProtocol(storage, agent)
+const protocol = new zkMPAProtocol(storage, agent)
 await protocol.initialize()
 
 // Complete flow

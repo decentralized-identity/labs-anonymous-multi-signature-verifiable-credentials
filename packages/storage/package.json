@@ -1,7 +1,7 @@
 {
-  "name": "@zkmap/storage",
+  "name": "@zkmpa/storage",
   "version": "0.0.1",
-  "description": "Storage adapters for zkMAP (Zero-Knowledge Multi-party Approval Protocol)",
+  "description": "Storage adapters for zkMPA (Zero-Knowledge Multi-Party Approval)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@zkmap/group": "workspace:*"
+    "@zkmpa/group": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

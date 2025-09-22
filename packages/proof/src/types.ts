@@ -1,5 +1,5 @@
-import { Identity } from '@zkmap/identity'
-import { Group } from '@zkmap/group'
+import { Identity } from '@zkmpa/identity'
+import { Group } from '@zkmpa/group'
 
 export interface ZKProof {
   merkleTreeRoot: string

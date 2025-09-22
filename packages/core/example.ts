@@ -6,16 +6,16 @@ import {
   CredentialVerifier,
   ProofGenerator,
   StorageFactory,
-  zkMAPProtocol
+  zkMPAProtocol
 } from './dist'
 
 async function example() {
-  console.log('🚀 zkMAP Protocol Demo\n')
+  console.log('🚀 zkMPA Protocol Demo\n')
   console.log('   Zero-Knowledge Multi-party Approval Protocol\n')
 
   // 1. Initialize protocol with in-memory storage
   const storage = StorageFactory.createMemoryAdapter()
-  const protocol = new zkMAPProtocol(storage)
+  const protocol = new zkMPAProtocol(storage)
   await protocol.initialize()
 
   console.log('✅ Protocol initialized\n')

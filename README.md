@@ -1,7 +1,7 @@
-# zkMAP - Zero-Knowledge Multi-party Approval Protocol for Verifiable Credentials
+# zkMPA - Zero-Knowledge Multi-Party Approval for Verifiable Credentials
 [![DIF Labs Project](https://img.shields.io/badge/DIF_Labs_Project-v1-black?style=for-the-badge&labelColor=%23000000&color=%2300ff00)](https://github.com/decentralized-identity/labs/blob/main/proposals/beta-cohort-2-2025/anon-multi-sig-vc/anon_multi_sig_vc_proposal.md)
 
-A comprehensive implementation of zkMAP (Zero-Knowledge Multi-party Approval Protocol) for verifiable credentials using Semaphore zero-knowledge proofs.
+A comprehensive implementation of zkMPA (Zero-Knowledge Multi-Party Approval) for verifiable credentials using Semaphore zero-knowledge proofs.
 
 ## 🏗️ Project Structure
 
@@ -9,15 +9,15 @@ A comprehensive implementation of zkMAP (Zero-Knowledge Multi-party Approval Pro
 .
 ├── docs/           # Protocol documentation and specifications
 ├── examples/       # Example implementations
-│   └── zkmap-demo/              # Full-stack zkMAP demo application
-└── packages/       # Core zkMAP packages
-    ├── @zkmap/core       # Main protocol implementation
-    ├── @zkmap/identity   # Identity management
-    ├── @zkmap/group      # Group management
-    ├── @zkmap/proposal   # Proposal and voting
-    ├── @zkmap/credential # VC issuance/verification
-    ├── @zkmap/proof      # ZK proof generation
-    └── @zkmap/storage    # Storage adapters
+│   └── zkmpa-demo/              # Full-stack zkMPA demo application
+└── packages/       # Core zkMPA packages
+    ├── @zkmpa/core       # Main protocol implementation
+    ├── @zkmpa/identity   # Identity management
+    ├── @zkmpa/group      # Group management
+    ├── @zkmpa/proposal   # Proposal and voting
+    ├── @zkmpa/credential # VC issuance/verification
+    ├── @zkmpa/proof      # ZK proof generation
+    └── @zkmpa/storage    # Storage adapters
 ```
 
 ## 🚀 Quick Start
@@ -32,14 +32,14 @@ pnpm install
 pnpm dev:example
 
 # Or navigate to the example directly
-cd examples/zkmap-demo
+cd examples/zkmpa-demo
 pnpm dev:all
 ```
 
 ## 📚 Documentation
 
 - [Protocol Documentation](./docs/README.md)
-- [Example Implementation](./examples/zkmap-demo/README.md)
+- [Example Implementation](./examples/zkmpa-demo/README.md)
 - [API Reference](./docs/api-reference.md)
 
 ## 🔑 Key Features
@@ -75,13 +75,13 @@ pnpm dev:all
 
 ## 📦 Reference Implementation
 
-This repository provides a reference implementation of zkMAP (Zero-Knowledge Multi-party Approval Protocol), including core packages to make it easier to implement this protocol:
+This repository provides a reference implementation of zkMPA (Zero-Knowledge Multi-Party Approval), including core packages to make it easier to implement this protocol:
 
-- **Core packages** (`@zkmap/*`) provide reusable components and protocol implementation
+- **Core packages** (`@zkmpa/*`) provide reusable components and protocol implementation
 - **Protocol specification** documented in `./docs/README.md`
-- **Working demo** available in `./examples/zkmap-demo/`
+- **Working demo** available in `./examples/zkmpa-demo/`
 
-The zkMAP packages are designed to simplify the implementation of the protocol by handling complex cryptographic operations, DID document management, and verification workflows.
+The zkMPA packages are designed to simplify the implementation of the protocol by handling complex cryptographic operations, DID document management, and verification workflows.
 
 ## 🤝 Contributing
 

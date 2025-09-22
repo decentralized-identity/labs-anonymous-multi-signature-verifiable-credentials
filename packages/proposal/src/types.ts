@@ -1,4 +1,4 @@
-import { ZKProof } from '@zkmap/proof'
+import { ZKProof } from '@zkmpa/proof'
 
 export interface ProposalParams {
   content: any
