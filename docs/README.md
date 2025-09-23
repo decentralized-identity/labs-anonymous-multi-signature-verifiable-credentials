@@ -4,6 +4,30 @@
 
 zkMPA enables organizations to issue W3C Verifiable Credentials based on anonymous multi-party approval. Members vote on credential issuance without revealing their identities using Semaphore zero-knowledge proofs.
 
+## Background & Motivation
+
+### Problem: DAOs Need Anonymous Yet Verifiable Decisions
+Decentralized organizations face a fundamental dilemma in collective decision-making:
+- **Transparency vs. Privacy**: On-chain voting exposes who voted for what, creating social pressure and potential retaliation
+- **Traditional Multisig Limitations**: Standard m-of-n schemes reveal individual signers' identities
+- **Duplicate Prevention Challenge**: Anonymous systems struggle to prevent members from voting multiple times
+
+### Why Existing Solutions Fall Short
+
+| Solution | Strengths | Limitations |
+|----------|-----------|-------------|
+| **Traditional Multisig** | • Threshold enforcement (m-of-n) | • No voter privacy<br>• Vulnerable to coercion<br>• Signers are publicly visible |
+| **Threshold BLS** | • Efficient single signature<br>• Cryptographically secure | • Cannot prevent duplicate votes<br>• No individual membership proofs<br>• Incompatible with VC evidence |
+
+### zkMPA Solution
+zkMPA uniquely combines:
+1. **Anonymous Voting**: Zero-knowledge proofs hide voter identities
+2. **Membership Verification**: Each vote cryptographically proves group membership
+3. **Duplicate Prevention**: Nullifiers ensure one-vote-per-member without revealing identity
+4. **VC Standard Compatibility**: Evidence field preserves all proofs for verifiable audit trail
+
+This enables DAOs to issue credentials based on genuine member consensus while protecting individual privacy—something not achievable with existing multisig or threshold signature schemes.
+
 ## Key Features
 
 - **Anonymous Voting**: Members vote using Semaphore zero-knowledge proofs
