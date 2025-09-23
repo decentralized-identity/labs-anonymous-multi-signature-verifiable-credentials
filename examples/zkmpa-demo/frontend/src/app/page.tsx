@@ -58,7 +58,7 @@ export default function Home() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">
-                Anonymous Multi-Party VC Protocol
+                zkMPA - Anonymous Multi-Party Approval for Verifiable Credentials
               </h1>
               <p className="mt-1 text-sm text-gray-600">
                 Decentralized credential issuance with privacy-preserving approvals

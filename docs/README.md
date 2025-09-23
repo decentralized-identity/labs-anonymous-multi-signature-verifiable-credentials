@@ -32,7 +32,7 @@ This enables DAOs to issue credentials based on genuine member consensus while p
 
 - **Anonymous Voting**: Members vote using Semaphore zero-knowledge proofs
 - **Threshold Approval**: Configurable m-of-n approval requirements
-- **Standard VC Format**: VCDM 2.0 compliant using VC-JWT format (VC-JOSE-COSE)
+- **Standard VC Format**: W3C VCDM 2.0 compliant using VC-JWT format (VC-JOSE-COSE)
 - **Verifiable Membership**: All approval proofs validate group membership
 - **Merkle Root History**: Tracks group state changes over time
 
@@ -61,7 +61,7 @@ Two-stage verification process:
    - Verify merkle root in issuer's history
    - Validate all approval proofs are from group members
 
-## VC Format (VCDM 2.0 VC-JWT)
+## VC Format (W3C VCDM 2.0)
 
 VCs are issued as compact JWT (JWS) following the VC-JOSE-COSE specification:
 

@@ -1,10 +1,12 @@
 export interface VCClaims {
+  title: string;
   subject: string;
   credentialSubject: {
     id: string;
     name: string;
     email: string;
     role: string;
+    [key: string]: any; // Allow any additional fields
   };
 }
 

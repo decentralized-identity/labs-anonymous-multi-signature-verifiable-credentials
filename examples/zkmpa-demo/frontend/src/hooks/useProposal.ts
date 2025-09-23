@@ -8,6 +8,7 @@ export function useProposal(groupDid: string) {
   const [error, setError] = useState('')
 
   const [vcClaims, setVcClaims] = useState<VCClaims>({
+    title: '',
     subject: 'did:example:holder123',
     credentialSubject: {
       id: 'did:example:holder123',

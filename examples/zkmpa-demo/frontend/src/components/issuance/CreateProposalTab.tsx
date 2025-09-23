@@ -1,8 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
+import { Input, TextArea } from '@/components/ui/Input'
 import { Alert } from '@/components/ui/Alert'
 import { VCClaims } from '@/types/issuance'
 
@@ -25,6 +26,22 @@ export function CreateProposalTab({
   error,
   onCreateProposal
 }: CreateProposalTabProps) {
+  const [showOptionalFields, setShowOptionalFields] = useState(false)
+
+  const toggleOptionalFields = () => {
+    if (!showOptionalFields) {
+      // Initialize optional fields when showing them
+      setVcClaims({
+        ...vcClaims,
+        credentialSubject: {
+          ...vcClaims.credentialSubject,
+          grantAmount: vcClaims.credentialSubject.grantAmount || '',
+          projectDescription: vcClaims.credentialSubject.projectDescription || ''
+        }
+      })
+    }
+    setShowOptionalFields(!showOptionalFields)
+  }
   return (
     <Card variant="elevated">
       <CardHeader>
@@ -36,6 +53,18 @@ export function CreateProposalTab({
 
       <CardContent>
         <div className="space-y-6">
+          {/* Proposal Title */}
+          <Input
+            label="Proposal Name"
+            value={vcClaims.title}
+            onChange={(e) => setVcClaims({
+              ...vcClaims,
+              title: e.target.value
+            })}
+            placeholder="Grant Application - StartupX"
+            helper="A descriptive name for this proposal"
+          />
+
           {/* VC Claims Section */}
           <div>
             <h3 className="text-sm font-semibold text-gray-900 mb-4 flex items-center">
@@ -81,14 +110,62 @@ export function CreateProposalTab({
               </div>
 
               <Input
-                label="Role"
+                label="Credential Type"
                 value={vcClaims.credentialSubject.role}
                 onChange={(e) => setVcClaims({
                   ...vcClaims,
                   credentialSubject: { ...vcClaims.credentialSubject, role: e.target.value }
                 })}
-                placeholder="DAO Member"
+                placeholder="Grant Recipient"
+                helper="Type of credential to issue (e.g., Grant Recipient, DAO Member, Developer)"
               />
+
+              {/* Optional Fields Toggle */}
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={toggleOptionalFields}
+                  className="text-sm text-blue-600 hover:text-blue-800 font-medium flex items-center"
+                >
+                  <svg
+                    className={`w-4 h-4 mr-1 transform transition-transform ${showOptionalFields ? 'rotate-90' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                  {showOptionalFields ? 'Hide' : 'Show'} Optional Fields (Grant Details)
+                </button>
+              </div>
+
+              {/* Optional Grant Fields */}
+              {showOptionalFields && (
+                <>
+                  <Input
+                    label="Grant Amount (Optional)"
+                    value={vcClaims.credentialSubject.grantAmount || ''}
+                    onChange={(e) => setVcClaims({
+                      ...vcClaims,
+                      credentialSubject: { ...vcClaims.credentialSubject, grantAmount: e.target.value }
+                    })}
+                    placeholder="$50,000"
+                    helper="Requested funding amount"
+                  />
+
+                  <TextArea
+                    label="Project Description (Optional)"
+                    value={vcClaims.credentialSubject.projectDescription || ''}
+                    onChange={(e) => setVcClaims({
+                      ...vcClaims,
+                      credentialSubject: { ...vcClaims.credentialSubject, projectDescription: e.target.value }
+                    })}
+                    rows={3}
+                    placeholder="Brief description of the project or purpose"
+                    helper="Additional context for the credential"
+                  />
+                </>
+              )}
             </div>
           </div>
 
@@ -139,7 +216,7 @@ export function CreateProposalTab({
       <CardFooter>
         <Button
           onClick={onCreateProposal}
-          disabled={loading || !vcClaims.credentialSubject.name}
+          disabled={loading || !vcClaims.title || !vcClaims.credentialSubject.name}
           loading={loading}
           className="w-full"
           size="lg"
