@@ -17,5 +17,30 @@
     "typescript": "^5.0.0",
     "jest": "^29.0.0",
     "@types/jest": "^29.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "author": "Seohee Park <dvlprsh103@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "zero-knowledge",
+    "multi-party",
+    "verifiable-credentials",
+    "semaphore",
+    "privacy",
+    "dao",
+    "governance"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/zkmpa.git",
+    "directory": "packages/group"
   }
 }

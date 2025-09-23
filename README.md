@@ -1,5 +1,6 @@
 # zkMPA - Zero-Knowledge Multi-Party Approval for Verifiable Credentials
 [![DIF Labs Project](https://img.shields.io/badge/DIF_Labs_Project-v1-black?style=for-the-badge&labelColor=%23000000&color=%2300ff00)](https://github.com/decentralized-identity/labs/blob/main/proposals/beta-cohort-2-2025/anon-multi-sig-vc/anon_multi_sig_vc_proposal.md)
+[![npm version](https://img.shields.io/npm/v/@zkmpa/core?style=for-the-badge)](https://www.npmjs.com/package/@zkmpa/core)
 
 A comprehensive implementation of zkMPA (Zero-Knowledge Multi-Party Approval) for verifiable credentials using Semaphore zero-knowledge proofs.
 
@@ -10,7 +11,7 @@ A comprehensive implementation of zkMPA (Zero-Knowledge Multi-Party Approval) fo
 ├── docs/           # Protocol documentation and specifications
 ├── examples/       # Example implementations
 │   └── zkmpa-demo/              # Full-stack zkMPA demo application
-└── packages/       # Core zkMPA packages
+└── packages/       # Core zkMPA packages (published on npm)
     ├── @zkmpa/core       # Main protocol implementation
     ├── @zkmpa/identity   # Identity management
     ├── @zkmpa/group      # Group management
@@ -21,6 +22,18 @@ A comprehensive implementation of zkMPA (Zero-Knowledge Multi-Party Approval) fo
 ```
 
 ## 🚀 Quick Start
+
+### Install from npm
+
+The core zkMPA packages are available on npm:
+
+```bash
+# Install the core package (includes all modules)
+npm install @zkmpa/core
+
+# Or install individual packages
+npm install @zkmpa/identity @zkmpa/group @zkmpa/proof
+```
 
 ### Run the Demo Example
 

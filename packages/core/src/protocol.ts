@@ -124,7 +124,7 @@ export class zkMPAProtocol {
         proof,
         voteType: vote.voteType,
         nullifierHash: proof.nullifier,
-        merkleTreeRoot: proof.merkleTreeRoot || group.getMerkleRoot()
+        merkleTreeRoot: proof.merkleTreeRoot || group.getMerkleRoot().toString()
       })
     }
 
